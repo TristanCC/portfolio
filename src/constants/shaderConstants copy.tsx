@@ -59,27 +59,27 @@ float noise(vec2 seed)
 }
 
 void main() {
-  float scale = 5.0;
+  float scale = 5.0; 
   float aspect = uResolution.x / uResolution.y;
 
   vec2 uv = vUv;
   uv.x *= aspect;
 
   vec2 noiseUV = uv * scale + vec2(uTime * 0.1);
+  float n1 = snoise(noiseUV);
+  float n2 = noise(noiseUV * 2.0); // tweak scale for contrast
 
-  float colorNoise = snoise(noiseUV);
-  float alphaNoise = noise(noiseUV * 2.0);
+  float combinedNoise = mix(n1, n2, 0.5); // average both
 
-  float hue = uv.x + uv.y + colorNoise * 0.9 + uTime * 0.1;
-  float sat = 0.3;
-  float val = mix(0.5, 0.8, clamp(colorNoise, 0.5, 1.0));
+  float hue = uv.x + uv.y + combinedNoise * 60.0 + uTime * 0.1;
+  float sat = 0.5;
+  float val = mix(0.5, 0.8, clamp(combinedNoise, 0.0, 1.0));
 
   vec3 color = hsv2rgb(vec3(hue, sat, val));
-  float alpha = mix(0.9, 1., sin(uTime + alphaNoise * 50.0) * 0.5 + 0.5);
+  float alpha = mix(0.5, 0.9, sin(uTime + combinedNoise) + 1.0);
 
   gl_FragColor = vec4(color, alpha);
 }
-
 
 
 
