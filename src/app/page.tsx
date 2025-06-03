@@ -9,10 +9,13 @@ import {gsap} from "gsap"
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 
+import CardTemplate from "@/components/cards/CardTemplate";
+import Bio from "@/components/cards/Bio";
 
 export default function Home() {
 
   const containerRef = useRef(null)
+  const wrapperRef = useRef(null)
 
 useGSAP(() => {
 
@@ -24,12 +27,22 @@ useGSAP(() => {
     {
       clipPath: "inset(0% 0% 0% 0%)",
       opacity: 1,
-      duration: 2,
+      duration: 1.5,
       delay: 2,
-      ease: "power2.out"
+      ease: "power2.inOut"
     }
   );
 }, { scope: containerRef });
+
+useGSAP(() => {
+
+  const tl = gsap.timeline()
+
+  tl.fromTo(".portfolio-wrapper",
+    { opacity: 0},
+    {opacity: 1, delay: 3.25}
+  )
+}, { scope: wrapperRef });
 
 
   return (
@@ -39,12 +52,21 @@ useGSAP(() => {
         <ThreeScene />
       </div>
 
-      <div className="">
-        <Hero/>
-        <div className="w-full bg-blue-500 self-center center text-center ">
-          portfolio
+      <Hero/>
+        
+      <div className="" ref={wrapperRef}>  
+        <div className="portfolio-wrapper flex justify-center items-center h-lvh -z-30 ">
+          <CardTemplate>
+            <Bio/>
+          </CardTemplate>
+          <CardTemplate>
+            <Bio/>
+          </CardTemplate>
+          <CardTemplate>
+            <Bio/>
+          </CardTemplate>
+          
         </div>
-
       </div>
       <div className="fixed right-0  z-10 bottom-0 m-4">
         <ThemeToggle />

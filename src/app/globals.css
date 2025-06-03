@@ -124,3 +124,8 @@ body, html {
     @apply bg-background text-foreground;
   }
 }
+
+body, html {
+  height: 100lvh;
+  overflow-y:auto;
+}

@@ -74,17 +74,15 @@ const ShaderPlane = () => {
 
 const ThreeScene = () => (
   <Canvas
-    className="absolute inset-0 -z-20 bg-white"
-    orthographic
+    className="absolute inset-0 -z-20"
+    orthographic 
     camera={{ 
       zoom: 100, 
       position: [2, 2, 2],
       
       
     }}
-    onCreated={({ gl }) => {
-    gl.setClearColor(new THREE.Color("#000000")); // Or any consistent color
-  }}
+
     
 
   >
