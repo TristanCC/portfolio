@@ -1,16 +1,13 @@
 import React, { useRef } from "react"
-import { Syne } from "next/font/google"
 import { gsap } from "gsap"
 import { useGSAP } from "@gsap/react"
 
-const syne = Syne({
-  subsets: ["latin", "greek", "latin-ext"]
-})
+
 
 const hello: Array<string> = "Hello World.".split("")
 const myName: Array<string> = "My name is Tristan!".split("")
 
-const Hero = () => {
+const Intro = () => {
   const containerRef = useRef(null)
 
   useGSAP(() => {
@@ -53,7 +50,7 @@ const Hero = () => {
   return (
     <div
       ref={containerRef}
-      className={`${syne.className} flex flex-col gap-4 w-fit h-screen justify-center items-center justify-self-center absolute left-0 right-0 m-0`}
+      className={` flex flex-col gap-4 w-fit h-screen justify-center items-center justify-self-center absolute left-0 right-0 m-0`}
     >
       <h1 className="text-5xl md:text-8xl hello">
         {hello.map((elem, index) => (
@@ -79,4 +76,4 @@ const Hero = () => {
   )
 }
 
-export default Hero
+export default Intro

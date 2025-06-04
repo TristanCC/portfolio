@@ -7,10 +7,11 @@ import * as THREE from "three";
 import { vertexShader, fragmentShader } from "@/constants/shaderConstants";
 import { Stats, OrbitControls } from '@react-three/drei'
 
+
 const ShaderPlane = () => {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const meshRef = useRef<THREE.Mesh>(null);
-  const { size, viewport } = useThree();
+  const { size, viewport, gl } = useThree();
 
   const uniforms = useRef({
     uMouse: { value: new THREE.Vector2(0.5, 0.5) },
@@ -19,15 +20,21 @@ const ShaderPlane = () => {
   });
 
   // Set initial resolution and mesh scale
-  useEffect(() => {
-    if (materialRef.current) {
-      materialRef.current.uniforms.uResolution.value.set(size.width, size.height);
-    }
 
-    if (meshRef.current) {
-      meshRef.current.scale.set(viewport.width*2, viewport.height*2, 1);
-    }
-  }, [size, viewport]);
+useEffect(() => {
+  if (materialRef.current) {
+    materialRef.current.uniforms.uResolution.value.set(
+      gl.domElement.width,
+      gl.domElement.height
+    );
+  }
+
+  if (meshRef.current) {
+    meshRef.current.scale.set(viewport.width, viewport.height, 1);
+  }
+}, [size, viewport, gl]);
+
+
 
   // Animate scale to pulse while keeping it fullscreen
   useFrame(({ clock }) => {
@@ -61,11 +68,12 @@ const ShaderPlane = () => {
     <mesh ref={meshRef} onPointerMove={handlePointerMove}>
       <planeGeometry args={[1, 1, 50, 50]} />
       <shaderMaterial
+
         ref={materialRef}
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
         uniforms={uniforms.current}
-        transparent={false}
+        transparent={true}
       />
     </mesh>
   );
@@ -74,7 +82,7 @@ const ShaderPlane = () => {
 
 const ThreeScene = () => (
   <Canvas
-    className="absolute inset-0 -z-20"
+    
     orthographic 
     camera={{ 
       zoom: 100, 

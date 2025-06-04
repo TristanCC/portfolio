@@ -125,7 +125,3 @@ body, html {
   }
 }
 
-body, html {
-  height: 100lvh;
-  overflow-y:auto;
-}
