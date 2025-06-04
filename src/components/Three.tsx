@@ -1,104 +1,77 @@
-
 "use client";
 
 import React, { useRef, useEffect } from "react";
 import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { vertexShader, fragmentShader } from "@/constants/shaderConstants";
-import { Stats, OrbitControls } from '@react-three/drei'
 
-
-const ShaderPlane = () => {
+const ShaderPlane = ({ passRef, mouseRef }) => {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const meshRef = useRef<THREE.Mesh>(null);
-  const { size, viewport, gl } = useThree();
+  const { size, viewport } = useThree();
 
   const uniforms = useRef({
-    uMouse: { value: new THREE.Vector2(0.5, 0.5) },
+    uMouse: { value: new THREE.Vector2(0, 0) },
     uResolution: { value: new THREE.Vector2(size.width, size.height) },
     uTime: { value: 0.0 }
   });
 
-  // Set initial resolution and mesh scale
-
-useEffect(() => {
-  if (materialRef.current) {
-    materialRef.current.uniforms.uResolution.value.set(
-      gl.domElement.width,
-      gl.domElement.height
-    );
-  }
-
-  if (meshRef.current) {
-    meshRef.current.scale.set(viewport.width, viewport.height, 1);
-  }
-}, [size, viewport, gl]);
-
-
-
-  // Animate scale to pulse while keeping it fullscreen
-  useFrame(({ clock }) => {
-    if (!meshRef.current) return;
-
-    const time = clock.getElapsedTime();
+  // Update resolution and scale when size changes
+  useEffect(() => {
     if (materialRef.current) {
-      materialRef.current.uniforms.uTime.value = time;
+      materialRef.current.uniforms.uResolution.value.set(size.width * 2, size.height * 2);
     }
+    if (meshRef.current) {
+      meshRef.current.scale.set(viewport.width, viewport.height, 1);
+    }
+  }, [size, viewport]);
 
-    // const pulse = 1 + Math.sin(time * pulseSpeed) * pulseAmount;
-    // meshRef.current.scale.set(
-    //   viewport.width * pulse,
-    //   viewport.height * pulse,
-    //   1
-    // );
+
+  useFrame(({ clock }) => {
+    if (materialRef.current) {
+      materialRef.current.uniforms.uTime.value = clock.getElapsedTime();
+      materialRef.current.uniforms.uMouse.value.copy(mouseRef.current);
+    }
   });
 
-  meshRef.current?.lookAt(new THREE.Vector3(1,1,1))
 
-  const handlePointerMove = (e: React.PointerEvent) => {
-    if (!materialRef.current) return;
-    if (e.pointerType === 'mouse') {
-      const x = e.clientX / size.width;
-      const y = 1 - e.clientY / size.height;
-      materialRef.current.uniforms.uMouse.value.set(x, y);
-    }
-  };
 
   return (
-    <mesh ref={meshRef} onPointerMove={handlePointerMove}>
+    <mesh 
+      ref={meshRef} 
+    >
       <planeGeometry args={[1, 1, 50, 50]} />
       <shaderMaterial
-
         ref={materialRef}
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
         uniforms={uniforms.current}
-        transparent={true}
       />
     </mesh>
   );
 };
 
+const ThreeScene = () => {
+  const materialRef = useRef<THREE.ShaderMaterial | null>(null);
+  const mouseRef = useRef(new THREE.Vector2(0, 0));
 
-const ThreeScene = () => (
-  <Canvas
-    
-    orthographic 
-    camera={{ 
-      zoom: 100, 
-      position: [2, 2, 2],
-      
-      
-    }}
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      // Normalize to [-1, 1] based on viewport
+      const x = (e.clientX / window.innerWidth) * 2 - 1;
+      const y = -(e.clientY / window.innerHeight) * 2 + 1; // flip Y
+      mouseRef.current.set(x, y);
+    };
 
-    
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
-  >
-    <ShaderPlane />
-        {/* <axesHelper args={[3]} />
-        <Stats /> */}
-
-  </Canvas>
-);
-
+  return (
+    <Canvas orthographic camera={{ zoom: 100, position: [0, 0, 1]}} className="">
+      <ShaderPlane passRef={materialRef} mouseRef={mouseRef} />
+    </Canvas>
+  );
+};
+  
 export default ThreeScene;

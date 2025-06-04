@@ -100,11 +100,60 @@ const fragmentShader = `
     float scanline = abs(sin(gl_FragCoord.y) * 0.5 * scan);
     color = mix(color, vec3(0.0), scanline);
 
+
+    // --- Mouse Movement ---
+    vec2 mouse = uMouse; // Already in [-1,1] range
+  
+    // Convert to normalized coordinates [-1,1]
+    vec2 fragCoord = (vUv - 0.5) * 2.0;
+  
+    // OPTION 1: Stretch horizontal axis (recommended for most cases)
+    vec2 aspectCorrectedFrag = fragCoord * vec2(aspect, 1.0);
+    vec2 aspectCorrectedMouse = mouse * vec2(aspect, 1.0);
+  
+    // OPTION 2: Squash vertical axis (alternative approach)
+    // vec2 aspectCorrectedFrag = fragCoord * vec2(1.0, 1.0/aspect);
+    // vec2 aspectCorrectedMouse = mouse * vec2(1.0, 1.0/aspect);
+  
+    // Calculate distance in aspect-corrected space
+    float dist = distance(aspectCorrectedFrag, aspectCorrectedMouse);
+  
+    // Create circle with smooth edges
+    float circleRadius = 0.2;
+    float edgeSoftness = 0.05;
+    float circle = smoothstep(circleRadius + edgeSoftness, circleRadius - edgeSoftness, dist);
+  
+    // Apply circle effect (yellow highlight)
+    vec3 mouseColor = mix(color, color+.1, circle);
+
     float alpha = mix(0.9, 1.0, sin(uTime + alphaNoise * 50.0) * 0.5 + 0.5);
-    gl_FragColor = vec4(color, alpha);
+    gl_FragColor = vec4(mouseColor, alpha);
   }
 `;
  export {vertexShader, fragmentShader};
+
+
+
+// MOUSE TRACKING
+
+//void main() {
+//  // Mouse visualization - red/green based on mouse position
+//  vec2 mouse = (uMouse +1.) * 0.5; // Convert from [-1,1] to [0,1]
+//  mouse = vec2(mouse.x, -mouse.y + 1.);
+//  // Create a circle that follows the mouse
+//  float dist = distance(vUv, mouse);
+//  float circle = smoothstep(0.1, 0.05, dist);
+//  
+//  // Mix between a color and the circle
+//  vec3 color = mix(vec3(vUv, 0.5), vec3(1.0, 1.0, 0.0), circle);
+//  
+//  gl_FragColor = vec4(color, 1.0);
+//}
+
+
+
+
+
 //  float val = sin(uTime) *1.0;
 
 
