@@ -23,6 +23,8 @@ import { FaCss3Alt } from "react-icons/fa";
 import { SiExpress } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
 
+import { syne } from "./fonts";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,6 +33,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+import Nav from "@/components/ui/Nav";
 
 import { FaReact } from "react-icons/fa";
 
@@ -89,7 +93,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="w-full h-full bg-accent fixed opacity-35"></div>
+      <div className="w-full h-full bg-accent fixed opacity-0"></div>
       <div className="" ref={containerRef}>
         <div
           className={`inset-0 -z-10 w-screen h-[100lvh] overflow-hidden shader will-change-auto fixed ${
@@ -134,57 +138,32 @@ export default function Home() {
         >
           <div className="portfolio-wrapper flex flex-col items-center z-50  h-full">
             <div className="w-[100lvw] max-w-[1000px] z-10 md:border-4 rounded-2xl border-accent-foreground md:my-8">
-              <div>
+              <div> 
                 <div className="flex flex-col justify-center items-start font-black tracking-wide md:text-9xl text-6xl mix-blend-hard-light p-4 pb-0 md:mb-4">
-                  <h1>TRISTAN</h1>
-                  <h1>JOHNSTON</h1>
+                  <div className="flex gap-0.25 md:gap-6 flex-wrap">
+                    <h1>TRISTAN</h1>
+                    <h1>JOHNSTON</h1>
+                  </div>
                 </div>
-                <p className="md:text-3xl text-lg md:font-light pl-4 md:pb-4 tracking-wide">
-                  Software Engineer • Full-Stack Developer • Creative Developer{" "}
+                <p className="md:text-3xl text-lg md:font-light pl-4 md:pb-4 tracking-wide  ">
+                  Software Engineer • Full-Stack Developer • Systems Builder{" "}
                 </p>
                 <div ref={navRef}>
-                  <ul
-                    className="flex flex-row md:gap- md:justify-start justify-center items-start text-xl mt-2 p-2
-                   font-bold w-full  mix-blend-hard-light border-accent-foreground border-t-2  border-b-2"
-                  >
-                    <li
-                      className="mix-blend-hard-light outline-sidebar-accent-foreground md:p-4 p-2 px-0 navLink
-                  rounded-xs border-accent-foreground md:w-[9rem] w-full md:pl-4 border-0 font-medium text-center hover:outline-2 "
-                    >
-                      <a href="">ABOUT</a>
-                    </li>
-                    <li
-                      className="mix-blend-hard-light outline-sidebar-accent-foreground md:p-4 p-2 px-0 navLink
-                  rounded-xs border-accent-foreground md:w-[9rem] w-full font-medium  text-center hover:outline-2"
-                    >
-                      <a href="">WORK</a>
-                    </li>
-                    <li
-                      className="mix-blend-hard-light outline-sidebar-accent-foreground md:p-4 p-2 px-0 navLink
-                  rounded-xs border-accent-foreground md:w-[9rem] w-full md:pl-4 font-medium text-center hover:outline-2"
-                    >
-                      <a href="">CONTACT</a>
-                    </li>
-                  </ul>
+                  <Nav/>
                 </div>
               </div>
-              <section className="flex flex-wrap w-full">
-                <section className="flex flex-col justify-center md:w-1/2 md:border-r-2 border-accent-foreground p-4">
-                  <h1 className="text-4xl font-bold mb-4 tracking-widest">
-                    WELCOME
+              <section className="flex flex-wrap w-full [&>*:nth-child(odd)]:w-[450px] [&>*:nth-child(odd)]:md:border-r-2 [&>*]:grow self-center justify-center">
+
+                <section className={`flex flex-col justify-start md:w-1/2 md:mt-4 p-4 `} style={{fontFamily: 'var(--font-syne)'}}>
+                  <h1 className="text-2xl md:text-4xl font-bold mb-4 tracking-widest">
+                    Welcome to my portfolio site!
                   </h1>
-                  <p className="md:text-xl text-lg">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Magnam molestiae repellendus quis vitae, porro deleniti
-                    rerum tempora excepturi eius iste sunt amet doloremque?
-                    Inventore assumenda explicabo officiis autem ipsa pariatur.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Atque ab nobis culpa sequi eveniet cupiditate totam repellat
-                    iure itaque, molestias rem earum in quae repellendus
-                    maiores! Iure fugiat cum incidunt?
+                  <p className={`md:text-xl text-lg ${syne.variable}`} style={{fontFamily: "var(--font-syne)"}}>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, soluta quod! Sapiente quo recusandae minus, facere nulla ea inventore officia laudantium, earum nostrum magni sit quae ab enim veritatis asperiores.
                   </p>
+                  
                 </section>
-                <section className="flex flex-col justify-center items-center md:w-1/2 md:border-r-2 border-accent-foreground p-4">
+                <section className="flex flex-col justify-center items-center md:w-1/2 md:border-r-2 border-accent-foreground p-4  ">
                   <div className="flex h-full w-full flex-wrap gap-4 items-center justify-center">
                     <div className="flex flex-col items-center">
                       <div className="p-4 pb-2 dark:border-2 rounded-lg flex flex-col justify-center items-center hover:scale-110 dark:bg-[rgba(1,1,1,0.05)] transition-transform duration-500">

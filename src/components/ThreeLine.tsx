@@ -1,5 +1,5 @@
 "use client";
-
+// ThreeLine.tsx
 import React, { useRef, useEffect } from "react";
 import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -47,10 +47,10 @@ const ShaderPlane = () => {
 
   useEffect(() => {
     if (materialRef1.current) {
-      materialRef1.current.uniforms.uResolution.value.set(size.width, size.height);
+      materialRef1.current.uniforms.uResolution.value.set(size.width*0.10, size.height*0.10);  // *0.10 for increased performance
     }
     if (materialRef2.current) {
-      materialRef2.current.uniforms.uResolution.value.set(size.width, size.height);
+      materialRef2.current.uniforms.uResolution.value.set(size.width*0.10, size.height*0.10);
     }
     animationState.current.baseScale = calculateBaseScale();
   }, [size, viewport]);

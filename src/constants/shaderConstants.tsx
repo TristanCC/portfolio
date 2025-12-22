@@ -6,131 +6,151 @@
    }
  `;
 const fragmentShader = `
-  uniform vec2 uMouse;
-  uniform vec2 uResolution;
-  uniform float uTime;
+precision highp float;
 
-  varying vec2 vUv;
+uniform vec2 uMouse;        // [-1,1]
+uniform vec2 uResolution;
+uniform float uTime;
 
-  vec3 colorA = vec3(0.149, 0.141, 0.912);
-  vec3 colorB = vec3(1.000, 0.833, 0.224);
-  vec3 colorC = vec3(0.149, 1.0, 0.912);
-  vec3 colorD = vec3(1.000, 0.0, 1.0);
+varying vec2 vUv;
 
-  float warp = 0.;
-  float scan = 0.3;
+/* =======================
+   HSV → RGB
+   ======================= */
+vec3 hsv2rgb(vec3 c) {
+  vec4 K = vec4(1.0, 2.0/3.0, 1.0/3.0, 3.0);
+  vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+  return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}
 
-  vec3 hsv2rgb(vec3 c) {
-    vec4 K = vec4(1.0, 2.0/3.0, 1.0/3.0, 3.0);
-    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-  }
+/* =======================
+   Simplex Noise (2D)
+   ======================= */
+vec3 permute(vec3 x) { 
+  return mod(((x * 34.0) + 1.0) * x, 289.0); 
+}
 
-  vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
+float snoise(vec2 v){
+  const vec4 C = vec4(
+    0.211324865405187,
+    0.366025403784439,
+   -0.577350269189626,
+    0.024390243902439
+  );
 
-  float snoise(vec2 v){
-    const vec4 C = vec4(0.211324865405187, 0.366025403784439,
-             -0.577350269189626, 0.024390243902439);
-    vec2 i  = floor(v + dot(v, C.yy) );
-    vec2 x0 = v -   i + dot(i, C.xx);
-    vec2 i1;
-    i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
-    vec4 x12 = x0.xyxy + C.xxzz;
-    x12.xy -= i1;
-    i = mod(i, 289.0);
-    vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
-    + i.x + vec3(0.0, i1.x, 1.0 ));
-    vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy),
-      dot(x12.zw,x12.zw)), 0.0);
-    m = m*m ;
-    m = m*m ;
-    vec3 x = 2.0 * fract(p * C.www) - 1.0;
-    vec3 h = abs(x) - 0.5;
-    vec3 ox = floor(x + 0.5);
-    vec3 a0 = x - ox;
-    m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
-    vec3 g;
-    g.x  = a0.x  * x0.x  + h.x  * x0.y;
-    g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-    return 33.0 * dot(m, g);
-  }
+  vec2 i = floor(v + dot(v, C.yy));
+  vec2 x0 = v - i + dot(i, C.xx);
 
-  float noise(vec2 seed)
-  {
-    float x = (seed.x / 3.14159 + 4.0) * (seed.y / 13.0 + 4.0) * ((fract(uTime) + 1.0) * 10.0);
-    return mod((mod(x, 13.0) + 1.0) * (mod(x, 123.0) + 1.0), 0.01) - 0.005;
-  }
+  vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+  vec4 x12 = x0.xyxy + C.xxzz;
+  x12.xy -= i1;
 
-  void main() {
-    // --- Aspect-corrected UV ---
-    vec2 uv = gl_FragCoord.xy / uResolution.xy;
-    vec2 centerUV = uv;
+  i = mod(i, 289.0);
+  vec3 p = permute(
+    permute(i.y + vec3(0.0, i1.y, 1.0)) +
+    i.x + vec3(0.0, i1.x, 1.0)
+  );
 
-    // --- CRT Warp Effect ---
-    vec2 dc = abs(0.5 - uv);
-    dc *= dc;
+  vec3 m = max(
+    0.5 - vec3(
+      dot(x0, x0),
+      dot(x12.xy, x12.xy),
+      dot(x12.zw, x12.zw)
+    ),
+    0.0
+  );
 
-    uv.x -= 0.5; uv.x *= 1.0 + (dc.y * (0.3 * warp)); uv.x += 0.5;
-    uv.y -= 0.5; uv.y *= 1.0 + (dc.x * (0.4 * warp)); uv.y += 0.5;
+  m *= m;
+  m *= m;
 
-    // If out of bounds after warp, return black
-    if (uv.y > 1.0 || uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0) {
-      gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-      return;
-    }
+  vec3 x = 2.0 * fract(p * C.www) - 1.0;
+  vec3 h = abs(x) - 0.5;
+  vec3 ox = floor(x + 0.5);
+  vec3 a0 = x - ox;
 
-    // --- Procedural color generation ---
-    float scale = 2.0;
-    float aspect = uResolution.x / uResolution.y;
-    vec2 procUV = centerUV; // use unwarped UV for coloring
-    procUV.x *= aspect;
+  m *= 1.79284291400159 - 0.85373472095314 *
+       (a0 * a0 + h * h);
 
-    vec2 noiseUV = procUV * scale + vec2(uTime * 0.1);
+  vec3 g;
+  g.x  = a0.x * x0.x + h.x * x0.y;
+  g.yz = a0.yz * x12.xz + h.yz * x12.yw;
 
-    float colorNoise = snoise(noiseUV);
-    float alphaNoise = noise(noiseUV * 2.0);
+  return 33.0 * dot(m, g);
+}
 
-    float hue = procUV.x + procUV.y + colorNoise * 0.9 + uTime * 0.1;
-    float sat = 0.5;
-    float val = mix(0.5, 0.8, clamp(colorNoise, 0.5, 1.0));
+void main() {
 
-    vec3 color = hsv2rgb(vec3(-hue + alphaNoise * 25., -sat, val));
+  /* =======================
+     Normalized coordinates
+     ======================= */
+  vec2 uv = gl_FragCoord.xy / uResolution.xy;
+  float aspect = uResolution.x / uResolution.y;
 
-    // --- CRT Scanline Effect ---
-    float scanline = abs(sin(gl_FragCoord.y) * 0.5 * scan);
-    color = mix(color, vec3(0.0), scanline);
+  vec2 p = uv;
+  p.x *= aspect;
 
+  /* =======================
+     Low-frequency noise
+     ======================= */
+  float scale = 1.5;
+  vec2 nUV = p * scale + vec2(uTime * 0.05);
 
-    // --- Mouse Movement ---
-    vec2 mouse = uMouse; // Already in [-1,1] range
+  float n = snoise(nUV);
 
-    // Convert to normalized coordinates [-1,1]
-    vec2 fragCoord = (vUv - 0.5) * 2.0;
+  // Band-limit noise
+  n = smoothstep(-0.4, 0.4, n);
+  n *= 0.35;
 
-    // OPTION 1: Stretch horizontal axis (recommended for most cases)
-    vec2 aspectCorrectedFrag = fragCoord * vec2(aspect, 1.0);
-    vec2 aspectCorrectedMouse = mouse * vec2(aspect, 1.0);
+  /* =======================
+     HSV color field
+     ======================= */
+  float hue = fract(p.x * 0.4 + p.y * 0.4 + n + uTime * 0.05);
+  float sat = 0.55;
+  float val = 0.75;
 
-    // OPTION 2: Squash vertical axis (alternative approach)
-    // vec2 aspectCorrectedFrag = fragCoord * vec2(1.0, 1.0/aspect);
-    // vec2 aspectCorrectedMouse = mouse * vec2(1.0, 1.0/aspect);
+  vec3 color = hsv2rgb(vec3(hue, sat, val));
 
-    // Calculate distance in aspect-corrected space
-    float dist = distance(aspectCorrectedFrag, aspectCorrectedMouse);
+  /* =======================
+     Mouse highlight
+     ======================= */
+// --- Mouse interaction in field space ---
+vec2 mouse = uMouse;
+vec2 frag = (vUv - 0.5) * vec2(aspect, 1.0) * 2.0;
+vec2 mpos = mouse * vec2(aspect, 1.0);
 
-    // Create circle with smooth edges
-    float circleRadius = 0.2;
-    float edgeSoftness = 0.05;
-    float circle = smoothstep(circleRadius + edgeSoftness, circleRadius - edgeSoftness, dist);
+float dist = distance(frag, mpos);
 
-    // Apply circle effect (yellow highlight)
-    vec3 mouseColor = mix(color, color+.1, circle);
+// Influence radius
+float r = 0.35;
 
-    float alpha = mix(0.9, 1.0, sin(uTime + alphaNoise * 50.0) * 0.5 + 0.5);
-    
-    gl_FragColor = vec4(mouseColor, alpha);
-  }
+// Smooth influence
+float influence = smoothstep(r, 0.0, dist);
+
+// Rotate hue locally
+float hueShift = influence * 0.18;
+
+// Increase saturation slightly under cursor
+float satBoost = influence * 0.25;
+
+// Apply interaction
+hue = fract(hue + hueShift);
+sat = clamp(sat + satBoost, 0.0, 1.0);
+
+// Recompute color
+color = hsv2rgb(vec3(hue, sat, val));
+  /* =======================
+     Soft scanlines (stable)
+     ======================= */
+  float scan = sin(gl_FragCoord.y * 1.25) * 0.03;
+  color -= scan;
+
+  /* =======================
+     Output
+     ======================= */
+  gl_FragColor = vec4(color, 1.0);
+}
 `;
+
  export {vertexShader, fragmentShader};
 
 

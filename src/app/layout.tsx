@@ -4,21 +4,7 @@ import { ThemeProvider } from "@/components/ui/theme-provider";
 import "./globals.css";
 import Nav from "@/components/Nav";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const bebasneue = Bebas_Neue({
-  weight: ["400"],
-  variable: "--font-bebas-neue",
-  subsets: ["latin"]
-})
+import { syne, bebasNeue } from "./fonts";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -33,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${bebasneue.variable} antialiased`}
+        className={`${bebasNeue.variable} max-w-screen`} style={{fontFamily: 'var(--font-bebas-neue'}}
       >
         <ThemeProvider
           attribute="class"
