@@ -4,8 +4,9 @@ import React, { useRef, useEffect } from "react";
 import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { vertexShader, fragmentShader } from "@/constants/shaderConstants";
+import { Stats } from "@react-three/drei";
 
-const ShaderPlane = ({ passRef, mouseRef }) => {
+const ShaderPlane = React.memo(({ mouseRef }) => {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const meshRef = useRef<THREE.Mesh>(null);
   const { size, viewport } = useThree();
@@ -40,7 +41,7 @@ const ShaderPlane = ({ passRef, mouseRef }) => {
     <mesh 
       ref={meshRef} 
     >
-      <planeGeometry args={[1, 1, 50, 50]} />
+      <planeGeometry args={[1, 1, 1, 1]} />
       <shaderMaterial
         ref={materialRef}
         vertexShader={vertexShader}
@@ -49,27 +50,39 @@ const ShaderPlane = ({ passRef, mouseRef }) => {
       />
     </mesh>
   );
-};
+})
 
 const ThreeScene = () => {
   const materialRef = useRef<THREE.ShaderMaterial | null>(null);
   const mouseRef = useRef(new THREE.Vector2(0, 0));
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      // Normalize to [-1, 1] based on viewport
+useEffect(() => {
+  let rafId: number;
+  
+  const handleMouseMove = (e: MouseEvent) => {
+    if (rafId) return; // Skip if frame already requested
+    
+    rafId = requestAnimationFrame(() => {
       const x = (e.clientX / window.innerWidth) * 2 - 1;
-      const y = -(e.clientY / window.innerHeight) * 2 + 1; // flip Y
+      const y = -(e.clientY / window.innerHeight) * 2 + 1;
       mouseRef.current.set(x, y);
-    };
+      rafId = 0;
+    });
+  };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  window.addEventListener("mousemove", handleMouseMove, { passive: true });
+  return () => {
+    window.removeEventListener("mousemove", handleMouseMove);
+    if (rafId) cancelAnimationFrame(rafId);
+  };
+}, []);
 
   return (
-    <Canvas orthographic camera={{ zoom: 100, position: [0, 0, 1]}} className="">
+    <Canvas orthographic camera={{ zoom: 100, position: [0, 0, 1]}} 
+    
+    className="">
       <ShaderPlane passRef={materialRef} mouseRef={mouseRef} />
+      <Stats/>
     </Canvas>
   );
 };

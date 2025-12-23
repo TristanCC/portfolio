@@ -19,12 +19,6 @@ const ShaderPlane = () => {
     uTime: { value: 0.0 }
   });
 
-  const uniforms2 = useRef({
-    uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-    uResolution: { value: new THREE.Vector2(size.width, size.height) },
-    uTime: { value: 0.0 }
-  });
-
   // Animation state
   const animationState = useRef({
     baseScale: 1,
@@ -118,7 +112,7 @@ const ShaderPlane = () => {
         onPointerMove={handlePointerMove}
         position={[0, 0, 0]}
       >
-        < planeGeometry args={[1, 0.01, 20, 100]} />
+        < planeGeometry args={[1, 0.01, 0, 0]} />
         <shaderMaterial
           ref={materialRef1}
           vertexShader={vertexShader}
@@ -139,7 +133,7 @@ const ShaderPlane = () => {
           ref={materialRef2}
           vertexShader={vertexShader}
           fragmentShader={fragmentShader}
-          uniforms={uniforms2.current}
+          uniforms={uniforms1.current}
           transparent={false}
           side={THREE.DoubleSide}
         />
