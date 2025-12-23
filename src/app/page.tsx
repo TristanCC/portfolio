@@ -74,8 +74,8 @@ export default function Home() {
         >
           <ThreeScene />
         </div>
-        <SettingsGear shaderOn={shaderOn} setShaderOn={setShaderOn} />
         <Intro />
+        <SettingsGear shaderOn={shaderOn} setShaderOn={setShaderOn} />
         <Main />
       </div>
     </>

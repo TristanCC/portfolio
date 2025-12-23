@@ -78,12 +78,15 @@ useEffect(() => {
 }, []);
 
   return (
-    <Canvas orthographic camera={{ zoom: 100, position: [0, 0, 1]}} 
-    
-    className="">
-      <ShaderPlane passRef={materialRef} mouseRef={mouseRef} />
-      <Stats/>
-    </Canvas>
+
+      <Canvas orthographic camera={{ zoom: 100, position: [0, 0, 1]}}
+      
+      className="">
+        <ShaderPlane passRef={materialRef} mouseRef={mouseRef} />
+        {//<Stats/>
+        }
+      </Canvas>
+
   );
 };
   
