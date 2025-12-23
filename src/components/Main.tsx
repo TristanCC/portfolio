@@ -12,56 +12,17 @@ import { FaJava } from "react-icons/fa";
 
 import { syne } from "../app/fonts";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
 import Nav from "@/components/ui/Nav";
 
 import { FaReact } from "react-icons/fa";
-
-import Settings from "@/components/Settings";
 
 const Main = () => {
 
     const wrapperRef = useRef(null);
     const navRef = useRef(null);
-    const [shaderOn, setShaderOn] = useState(true);
 
     return (
     <>
-        <div className="fixed m-4 bottom-0 right-0 z-1000">
-          <DropdownMenu>
-            <DropdownMenuTrigger className="z-50 p-4">
-              <IoSettingsOutline className="scale-200" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              className="z-[1000] bg-background"
-              sideOffset={5}
-              align="end"
-              >
-              <DropdownMenuLabel>Settings</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <div className="flex w-full justify-between items-center">
-                  <h1>Dark</h1>
-                  <Settings setting={"theme-toggle"} setSetting={null} />
-                </div>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <div className="flex w-full justify-between items-center">
-                  <h1>Shader</h1>
-                  <Settings setting={shaderOn} setSetting={setShaderOn} />
-                </div>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
 
         <div
           className="flex flex-col z-10 justify-center items-center h-[100lvh]"

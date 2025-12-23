@@ -10,6 +10,7 @@ import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import { TextPlugin } from "gsap/all";
 import Main from "@/components/Main";
+import SettingsGear from "@/components/SettingsGear";
 
 export default function Home() {
   const containerRef = useRef(null);
@@ -73,6 +74,7 @@ export default function Home() {
         >
           <ThreeScene />
         </div>
+        <SettingsGear shaderOn={shaderOn} setShaderOn={setShaderOn} />
         <Intro />
         <Main />
       </div>
