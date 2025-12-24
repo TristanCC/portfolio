@@ -5,6 +5,7 @@ import { syne } from "../app/fonts";
 import Nav from "./Nav";
 import Skills from "./sections/Skills";
 import IntroductionBlurb from "./sections/IntroductionBlurb";
+import Image from "next/image";
 
 const Main = () => {
   const wrapperRef = useRef(null);
@@ -13,7 +14,7 @@ const Main = () => {
   return (
     <>
       <div
-        className="flex flex-col z-10 justify-center items-center h-[100lvh]"
+        className="flex flex-col z-10 justify-center items-center overflow-y"
         ref={wrapperRef}
       >
         <div className="portfolio-wrapper flex flex-col items-center z-50  h-full border-accent-foreground">
@@ -40,12 +41,23 @@ const Main = () => {
                 <Nav />
               </div>
             </div>
+
             <section
               className="flex flex-wrap w-full [&>*:nth-child(odd)]:w-[450px]
               [&>*:nth-child(odd)]:md:border-r-2 [&>*:nth-child(odd)]:md:border-accent-foreground [&>*]:grow self-center"
             >
-              <IntroductionBlurb />
-              <Skills />
+              <section
+                className={`flex flex-col justify-start md:w-1/2 p-4 pr-6 pt-6 `}
+                style={{ fontFamily: "var(--font-syne)" }}
+              >
+                <IntroductionBlurb />
+              </section>
+              <section
+                className={`flex flex-wrap justify-start md:w-1/2 p-4 pr-6 pt-6 `}
+                style={{ fontFamily: "var(--font-syne)" }}
+              >
+                <Skills />
+              </section>
             </section>
           </div>
         </div>

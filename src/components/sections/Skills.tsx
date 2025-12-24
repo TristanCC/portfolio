@@ -8,9 +8,9 @@ import { FaJava } from "react-icons/fa";
 import { FaReact } from "react-icons/fa";
 
 const Skills = () => {
-
   return (
-    <section className="flex flex-col justify-center items-center md:w-1/2 border-accent-foreground p-4  ">
+    <>
+      <h1 className="md:text-3xl">Skills</h1>
       <div className="flex h-full w-full flex-wrap gap-4 items-center justify-center">
         <div className="flex flex-col items-center">
           <div className="p-4 pb-2 dark:border-2 rounded-lg flex flex-col justify-center items-center hover:scale-110 dark:bg-[rgba(1,1,1,0.05)] transition-transform duration-500">
@@ -49,8 +49,8 @@ const Skills = () => {
           </div>
         </div>
       </div>
-    </section>
+    </>
   );
 };
 
-export default Skills
+export default Skills;
