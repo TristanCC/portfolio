@@ -62,7 +62,7 @@ const Intro = () => {
           </span>
         ))}
       </h1>
-      <p className="text-2xl md:text-3xl font-bold tracking-wider justify-self-start self-start name">
+      <p className="text-2xl md:text-3xl font-bold tracking-wider  justify-self-start self-start name">
         {myName.map((elem, index) => (
           <span
             key={index}

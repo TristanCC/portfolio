@@ -3,6 +3,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@layer utilities {
+  .shape-outside {
+    shape-outside: circle(50%);
+  }
+}
+
 
 @theme inline {
   --color-background: var(--background);

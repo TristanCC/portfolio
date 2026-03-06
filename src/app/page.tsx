@@ -22,7 +22,7 @@ export default function Home() {
 
   gsap.registerPlugin(TextPlugin);
 
-  useGSAP(
+/*   useGSAP(
     () => {
       const tl = gsap.timeline();
 
@@ -37,29 +37,23 @@ export default function Home() {
           ease: "power2.inOut",
         }
       );
-    },
-    { scope: containerRef }
-  );
 
-  useGSAP(
-    () => {
-      const tl = gsap.timeline();
-
-      tl.fromTo(
-        ".portfolio-wrapper",
-        { opacity: 0 },
-        { opacity: 1, delay: 3.25 }
+            tl.fromTo(
+        ".main",
+        { clipPath: "inset(0% 0% 0% 0%)", opacity: 0 },
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+          opacity: 1,
+          duration: 0.33,
+          ease: "power2.inOut",
+        }
       );
     },
-    { scope: wrapperRef }
-  );
+    { scope: containerRef }
+  ); */
 
-  useGSAP(
-    () => {
-      gsap.to(".navLink", {});
-    },
-    { scope: navRef }
-  );
+
+
 
   const [shaderOn, setShaderOn] = useState(true);
 
@@ -68,15 +62,20 @@ export default function Home() {
       <div className="w-full h-full bg-accent fixed opacity-0"></div>
       <div className="" ref={containerRef}>
         <div
-          className={`inset-0 -z-10 w-screen h-[100lvh] overflow-hidden shader will-change-auto fixed ${
-            shaderOn ? "visible" : "hidden"
+          className={`inset-0  w-screen h-[100lvh] overflow-hidden shader will-change-auto fixed ${
+            shaderOn ? "hidden" : "hidden"
           }`}
         >
           <ThreeScene />
         </div>
-        <Intro />
+        <div className="fixed inset-0 w-full h-full pointer-events-none bg-[radial-gradient(hsl(38,33%,70%)_1px,transparent_1px)]
+        dark:bg-[radial-gradient(hsl(38,33%,10%)_1px,transparent_1px)] bg-[size:16px_16px] bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]  ">
+          {/* <Intro /> */}
+        </div>
         <SettingsGear shaderOn={shaderOn} setShaderOn={setShaderOn} />
-        <Main />
+        <div className=" relative z-0  main">
+          <Main />
+        </div>
       </div>
     </>
   );

@@ -3,34 +3,31 @@ const Nav = () => {
 
     return (
 
-          <div className=" sticky top-0 ">
-            <ul
-              style={{fontFamily: "var(--font-syne)"}}
-              className={` ${syne.variable} md:text-2xl text-md tracking-wide flex flex-row  gap-4 md:justify-start justify-center items-start mt-2 md:p-2
-             font-bold w-full  mix-blend-hard-light border-accent-foreground border-t-2 border-b-2 text-nowrap`}
-            >
-              <li
-                className=" self-center pt-4 pb-4 md:p-4 hover:outline-2 outline-accent-foreground text-justify font-medium hover:cursor-pointer"
-              >
-                <a href="">/ABOUT</a>
-              </li>
-              <li
-                className="self-center pt-4 pb-4 md:p-4 hover:outline-2 outline-accent-foreground text-justify font-medium hover:cursor-pointer"
-              >
-                <a href="">/WORK</a>
-              </li>
-              <li
-                className=" self-center pt-4 pb-4 md:p-4 hover:outline-2 outline-accent-foreground text-justify font-medium hover:cursor-pointer"
-              >
-                <a href="">/CONTACT</a>
-              </li>
-                          <li
-                className=" self-center pt-4 pb-4 md:p-4 hover:outline-2 outline-accent-foreground text-justify font-medium hover:cursor-pointer"
-              >
-                <a href="">/RESUME</a>
-              </li>
-            </ul>
-          </div>
+<nav className="w-full sticky top-0">
+  <ul
+    style={{ fontFamily: "var(--font-syne)" }}
+    className={`${syne.variable} flex flex-row w-full items-center justify-center border-y-2 border-accent-foreground font-bold tracking-wide text-nowrap
+      /* Small: Mobile-first defaults */
+      text-md gap-2 py-2
+      /* Medium: Tablet */
+      md:text-xl md:gap-4 md:px-2
+      /* Large: Desktop */
+      lg:text-2xl lg:gap-8 lg:px-4`}
+  >
+    {['ABOUT', 'WORK', 'CONTACT', 'RESUME'].map((item) => (
+      <li
+        key={item}
+        className="self-center font-medium transition-all hover:cursor-pointer hover:outline-2 outline-accent-foreground
+          /* Responsive Padding */
+          py-2 px-1 
+          md:p-4 
+          lg:px-6"
+      >
+        <a href={`/${item.toLowerCase()}`}>/{item}</a>
+      </li>
+    ))}
+  </ul>
+</nav>
 
     )
 }

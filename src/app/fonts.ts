@@ -1,10 +1,16 @@
-import { Syne, Geist, Geist_Mono, Bebas_Neue } from "next/font/google";
+import { Syne, Geist, Geist_Mono, Bebas_Neue, Inter } from "next/font/google";
 
 export const syne = Syne({
   variable: "--font-syne",
   weight: ["400"],
   subsets: ["latin"],
 });
+
+export const inter = Inter({
+  variable: "--font-inter",
+  weight: ["400"],
+
+})
 
 export const geistSans = Geist({
   variable: "--font-geist-sans",

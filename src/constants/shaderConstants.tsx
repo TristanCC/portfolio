@@ -105,8 +105,8 @@ void main() {
      HSV color field
      ======================= */
   float hue = fract(p.x * 0.4 + p.y * 0.4 + n + uTime * 0.05);
-  float sat = 0.55;
-  float val = 0.75;
+  float sat = 0.33;
+  float val = 0.66;
 
   vec3 color = hsv2rgb(vec3(hue, sat, val));
 
