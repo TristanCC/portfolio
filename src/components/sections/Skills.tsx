@@ -7,11 +7,12 @@ import { SiExpress } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
 import { FaReact } from "react-icons/fa";
 
+import { inter, syne } from "../../app/fonts";
+
 const Skills = () => {
   return (
     <>
-{/*       <h1 className="md:text-3xl">Skills</h1>
-      <div className="flex h-full w-full flex-wrap gap-4 items-center justify-center">
+      {/*       <div className="flex h-full w-full flex-wrap gap-4 items-center justify-center">
         <div className="flex flex-col items-center">
           <div className="p-4 pb-2 dark:border-2 rounded-lg flex flex-col justify-center items-center hover:scale-110 dark:bg-[rgba(1,1,1,0.05)] transition-transform duration-500">
             <RiJavascriptFill size={100} />
@@ -48,7 +49,8 @@ const Skills = () => {
             <h1 className="text-2xl">Express.js</h1>
           </div>
         </div>
-      </div> */}
+      </div>  */}
+
     </>
   );
 };

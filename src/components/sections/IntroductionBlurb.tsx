@@ -1,6 +1,6 @@
 import { syne } from "../../app/fonts";
 import Image from "next/image";
-import {inter} from "../../app/fonts"
+import { inter } from "../../app/fonts";
 
 const IntroductionBlurb = () => {
   return (
@@ -8,7 +8,7 @@ const IntroductionBlurb = () => {
       {/* Resume notice */}
       <div className="flex flex-col gap-4">
         <p
-          className={`text-md md:text-xl font-black px-4 py-3  border-l-2 border-accent-foreground border-dashed text-j
+          className={`text-md md:text-xl font-black px-4 py-3  border-l-2 border-orange-500 border-solid text-j
           bg-[hsl(38,33%,5%,0%)]  ${syne.variable}`}
           style={{ fontFamily: "var(--font-syne)" }}
         >
@@ -19,9 +19,10 @@ const IntroductionBlurb = () => {
           </a>
         </p>
         {/* Section header */}
-        <div className={`flex justify-between ${syne.variable}`}
-        style={{ fontFamily: "var(--font-syne)" }}>
-          
+        <div
+          className={`flex justify-between ${syne.variable}`}
+          style={{ fontFamily: "var(--font-syne)" }}
+        >
           <div className="flex flex-col items-start justify-end px-2 font-bold ">
             <span className="text-lg md:text-xl tracking-wider">
               ARTICLE I — ABOUT
@@ -30,7 +31,6 @@ const IntroductionBlurb = () => {
               HEY, I'M TRISTAN.
             </h1>
           </div>
-
         </div>
       </div>
 
@@ -39,13 +39,22 @@ const IntroductionBlurb = () => {
         className={`text-md md:text-xl border-t-2 border-accent-foreground pt-4 ${inter.variable}`}
         style={{ fontFamily: "var(--font-inter)" }}
       >
-        I'm a software engineer who designs and builds full-stack systems with
-        rigorous attention to detail and care for user experience. I enjoy
-        developing intuitive, user-friendly software that helps people navigate
-        the world while opening the door to new perspectives. I’m especially
-        interested in human-centric design, i.e. systems foundationally rooted
-        in user empathy, wellbeing, and growth.
+        MAR. 2026 - I'm a software engineer who designs and builds full-stack
+        systems with rigorous attention to detail and care for user experience.
+        I enjoy developing intuitive, user-friendly software that helps people
+        navigate the world while opening the door to new perspectives.
       </p>
+
+
+      <div>
+        <p
+          className={`text-md md:text-xl ${inter.variable}`}
+          style={{ fontFamily: "var(--font-inter)" }}
+        >
+          I’m especially interested in <b>human-centered design</b>, i.e. systems
+          foundationally rooted in user empathy, wellbeing, and growth.
+        </p>
+      </div>
     </div>
   );
 };

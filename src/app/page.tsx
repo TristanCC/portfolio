@@ -22,7 +22,7 @@ export default function Home() {
 
   gsap.registerPlugin(TextPlugin);
 
-/*   useGSAP(
+  /*   useGSAP(
     () => {
       const tl = gsap.timeline();
 
@@ -52,24 +52,27 @@ export default function Home() {
     { scope: containerRef }
   ); */
 
-
-
-
   const [shaderOn, setShaderOn] = useState(true);
 
   return (
     <>
-      <div className="w-full h-full bg-accent fixed opacity-0"></div>
-      <div className="" ref={containerRef}>
+      <div className="w-full h-full bg-accent overflow-visible fixed opacity-0"></div>
+      <div className="overflow-visible" ref={containerRef}>
         <div
-          className={`inset-0  w-screen h-[100lvh] overflow-hidden shader will-change-auto fixed ${
+          className={`inset-0 left-0 right-0 w-full h-[100lvh] shader will-change-auto fixed ${
             shaderOn ? "hidden" : "hidden"
           }`}
         >
           <ThreeScene />
         </div>
-        <div className="fixed inset-0 w-full h-full pointer-events-none bg-[radial-gradient(hsl(38,33%,70%)_1px,transparent_1px)]
-        dark:bg-[radial-gradient(hsl(38,33%,10%)_1px,transparent_1px)] bg-[size:16px_16px] bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]  ">
+        <div
+          className="fixed inset-0 w-full h-full pointer-events-none
+  bg-[radial-gradient(hsl(38_33%_70%_/_0.50)_1px,transparent_1px)]
+  dark:bg-[radial-gradient(hsl(38_33%_10%_/_0.50)_1px,transparent_1px)]
+  bg-[size:16px_16px]
+  bg-[hsl(38_33%_90%)]
+  dark:bg-[hsl(38_33%_5%)]"
+        >
           {/* <Intro /> */}
         </div>
         <SettingsGear shaderOn={shaderOn} setShaderOn={setShaderOn} />

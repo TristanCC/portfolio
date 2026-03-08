@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/ui/theme-provider";
 import "./globals.css";
 import Nav from "@/components/Nav";
 
-import { syne, bebasNeue } from "./fonts";
+import { syne, bebasNeue, inter } from "./fonts";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,8 +19,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${bebasNeue.variable} max-w-screen`} style={{fontFamily: 'var(--font-bebas-neue'}}
+        className={`${bebasNeue.variable} ${syne.variable} ${inter.variable} max-w-screen`}
       >
+        <div
+          id="portal-root"
+          className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none [&>*]:pointer-events-auto"
+          aria-hidden
+          style={{ zIndex: 9998 }}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

@@ -1,67 +1,148 @@
-import { useRef } from "react";
+"use client";
 
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import Nav from "./Nav";
 import Skills from "./sections/Skills";
+import Hero from "./sections/Hero";
 import IntroductionBlurb from "./sections/IntroductionBlurb";
-import Image from "next/image";
+import {
+  ScrambleTextPlugin,
+  ScrollSmoother,
+  ScrollTrigger,
+  SplitText,
+} from "gsap/all";
+
+gsap.registerPlugin(
+  useGSAP,
+  ScrambleTextPlugin,
+  SplitText,
+  ScrollTrigger,
+  ScrollSmoother,
+);
 
 const Main = () => {
-  const wrapperRef = useRef(null);
+  const container = useRef(null);
   const navRef = useRef(null);
 
+  useGSAP(
+    () => {
+      const ctx = gsap.context(() => {
+        const smoother = ScrollSmoother.create({
+          wrapper: "#smooth-wrapper",
+          content: "#smooth-content",
+          smooth: 1.5,
+          effects: true,
+          smoothTouch: 0.2,
+        });
+
+        gsap.utils.toArray(".reveal").forEach((el) => {
+          gsap.from(el, {
+            y: 60,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 85%",
+            },
+          });
+        });
+
+        gsap.utils.toArray("section[id]").forEach((section) => {
+          const id = section.getAttribute("id");
+
+          ScrollTrigger.create({
+            trigger: section,
+            start: "top center",
+            end: "bottom center",
+            toggleClass: {
+              targets: `.nav-link[href="#${id}"]`,
+              className: "active",
+            },
+          });
+        });
+
+
+        ScrollTrigger.create({
+          trigger: navRef.current,
+          start: "top top",
+          endTrigger: "#smooth-content",
+          end: "bottom bottom",
+          pin: true,
+          pinSpacing: false,
+        });
+
+        document.querySelectorAll(".nav-link").forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            const target = link.getAttribute("href");
+            ScrollSmoother.get().scrollTo(target, true, "top center");
+          });
+        });
+      }, container);
+
+      return () => ctx.revert();
+    },
+    { scope: container },
+  );
+
   return (
-    <div
-      className="flex flex-col justify-center items-center overflow-y relative z-0"
-      ref={wrapperRef}
-    >
-      <div className="flex flex-col items-center h-full border-accent-foreground">
+    <div className="flex flex-col items-center relative z-0" ref={container}>
+      <div
+        className="flex flex-col items-center h-full border-accent-foreground"
+        id="smooth-wrapper"
+      >
         <div
-          className="w-[100lvw] max-w-[1000px] p-2 md:p-4 md:border-2
+          className="w-full max-w-[1000px] min-w-0 p-2 md:p-4 border-dashed md:border-2
           border-black/70 dark:border-white/70 md:my-8
-          overflow-hidden bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
+          bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
+          id="smooth-content"
         >
-          {/* <Image
-            src={"/paperTexture.jpg"}
-            width={1000}
-            height={1000}
-            alt="paper texture background"
-            className="w-full h-full absolute inset-0 mix-blend-difference object-cover opacity-33"
-          /> */}
-
-          <div>
-            <div
-              className="flex flex-col justify-center items-center tracking-wide 
-              md:text-9xl text-5xl p-4 pb-0 pl-0 md:mb-4 text-center"
-            >
-              <div className="flex border-accent-foreground gap-2 md:gap-2 flex-wrap leading-[75%]">
-                <h1>TRISTAN</h1>
-                <h1>JOHNSTON</h1>
-              </div>
-
-              <h3 className="md:text-4xl text-2xl md:pl-4 pt-2">
-                Software Engineer / Full-Stack Developer
-              </h3>
+          {/* Header */}
+          <div className="flex flex-col justify-center items-center tracking-wide md:text-9xl text-5xl p-4 pb-0 md:mb-4 text-center">
+            <div className="flex flex-wrap gap-2 items-center justify-center leading-[85%] font-heading">
+              <h1>TRISTAN</h1>
+              <h1>JOHNSTON</h1>
             </div>
 
-            <div ref={navRef}>
-              <Nav />
-            </div>
+            <h3 className=" subheading md:text-4xl text-xl py-2">
+              Software Engineer · Full-Stack Developer
+            </h3>
           </div>
 
-          <section className="grid grid-cols-1 md:grid-cols-2 w-full self-center">
+          {/* Sticky Nav */}
+          <div
+            ref={navRef}
+            className="z-10 bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
+          >
+            <Nav />
+          </div>
+
+          <div className="md:w-2/3 border-r px-4  border-accent-foreground ">
+            <Hero/>
+          </div>
+
+          {/* Content Grid */}
+          <section className="grid grid-cols-1 md:grid-cols-12 w-full [&>*:nth-child(even)]:border-0">
             <section
-              className="flex flex-col justify-start md:p-4 md:pr-6 pt-6 border-accent-foreground md:border-r-2"
+              id="about"
+              className="flex flex-col col-span-8 border-accent-foreground md:border-r md:p-4 md:pr-6 pt-6 reveal"
               style={{ fontFamily: "var(--font-syne)" }}
             >
               <IntroductionBlurb />
             </section>
 
             <section
-              className="flex flex-col justify-start md:p-4 md:pl-6 pt-6"
+              id="work"
+              className="flex flex-col border-accent-foreground md:border-r md:p-4 md:pr-6 pt-6 reveal"
               style={{ fontFamily: "var(--font-syne)" }}
             >
               <Skills />
             </section>
+
           </section>
         </div>
       </div>
