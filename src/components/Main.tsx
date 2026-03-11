@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Nav from "./Nav";
@@ -14,6 +14,8 @@ import {
   SplitText,
 } from "gsap/all";
 
+import Image from "next/image";
+
 gsap.registerPlugin(
   useGSAP,
   ScrambleTextPlugin,
@@ -23,6 +25,9 @@ gsap.registerPlugin(
 );
 
 const Main = () => {
+  const [current, setCurrent] = useState(0);
+  const images = ["./dogAsset2.svg"];
+
   const container = useRef(null);
   const navRef = useRef(null);
 
@@ -35,6 +40,22 @@ const Main = () => {
           smooth: 1.5,
           effects: true,
           smoothTouch: 0.2,
+        });
+
+        gsap.from(".hero-line", {
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.08,
+        });
+
+        gsap.from(".hero-sub", {
+          y: 20,
+          opacity: 0,
+          duration: 0.6,
+          ease: "power2.out",
+          delay: 0.25,
         });
 
         gsap.utils.toArray(".reveal").forEach((el) => {
@@ -64,7 +85,6 @@ const Main = () => {
           });
         });
 
-
         ScrollTrigger.create({
           trigger: navRef.current,
           start: "top top",
@@ -77,7 +97,6 @@ const Main = () => {
         document.querySelectorAll(".nav-link").forEach((link) => {
           link.addEventListener("click", (e) => {
             e.preventDefault();
-
             const target = link.getAttribute("href");
             ScrollSmoother.get().scrollTo(target, true, "top center");
           });
@@ -95,20 +114,21 @@ const Main = () => {
         className="flex flex-col items-center h-full border-accent-foreground"
         id="smooth-wrapper"
       >
+        {/* Main Container */}
         <div
-          className="w-full max-w-[1000px] min-w-0 p-2 md:p-4 border-dashed md:border-2
+          className="w-full max-w-[1100px] min-w-0 p-6 md:p-10 border-dashed md:border-2
           border-black/70 dark:border-white/70 md:my-8
           bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
           id="smooth-content"
         >
           {/* Header */}
-          <div className="flex flex-col justify-center items-center tracking-wide md:text-9xl text-5xl p-4 pb-0 md:mb-4 text-center">
+          <div className="flex flex-col tracking-wide md:text-9xl text-5xl pt-6 pb-2 text-center">
             <div className="flex flex-wrap gap-2 items-center justify-center leading-[85%] font-heading">
-              <h1>TRISTAN</h1>
-              <h1>JOHNSTON</h1>
+              <h1 className="hero-line">TRISTAN</h1>
+              <h1 className="hero-line">JOHNSTON</h1>
             </div>
 
-            <h3 className=" subheading md:text-4xl text-xl py-2">
+            <h3 className="subheading hero-sub md:text-4xl text-xl mt-2 mb-4 tracking-tighter md:tracking-wide" >
               Software Engineer · Full-Stack Developer
             </h3>
           </div>
@@ -121,28 +141,77 @@ const Main = () => {
             <Nav />
           </div>
 
-          <div className="md:w-2/3 border-r px-4  border-accent-foreground ">
-            <Hero/>
-          </div>
-
           {/* Content Grid */}
-          <section className="grid grid-cols-1 md:grid-cols-12 w-full [&>*:nth-child(even)]:border-0">
+          <section className="grid grid-cols-1 md:grid-cols-12 w-full mt-6">
+            {/* About Section */}
             <section
               id="about"
-              className="flex flex-col col-span-8 border-accent-foreground md:border-r md:p-4 md:pr-6 pt-6 reveal"
+              className="flex flex-col col-span-8 md:border-r-2 p-6 md:pr-8 pt-8 border-accent-foreground/10 border-dashed reveal"
               style={{ fontFamily: "var(--font-syne)" }}
             >
               <IntroductionBlurb />
             </section>
 
+            {/* Phone Section */}
             <section
-              id="work"
-              className="flex flex-col border-accent-foreground md:border-r md:p-4 md:pr-6 pt-6 reveal"
+              id="about"
+              className="flex flex-col col-span-4 justify-center items-center p-6 md:pl-8 pt-8 reveal"
               style={{ fontFamily: "var(--font-syne)" }}
             >
-              <Skills />
-            </section>
+              <div style={{ position: "relative" }}>
+                {/* Phone Frame */}
+                <Image
+                  src="./phoneAsset1.svg"
+                  alt="phone"
+                  width={333}
+                  height={333}
+                  style={{ position: "relative", zIndex: 2 }}
+                />
 
+                {/* Swipeable Content */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "12%",
+                    left: "10%",
+                    width: "80%",
+                    height: "76%",
+                    overflow: "hidden",
+                    zIndex: 1,
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      width: `${images.length * 100}%`,
+                      height: "100%",
+                      transform: `translateX(-${(current * 100) / images.length}%)`,
+                      transition: "transform 0.3s ease",
+                    }}
+                  >
+                    {images.map((src, i) => (
+                      <div
+                        key={i}
+                        style={{
+                          width: `${100 / images.length}%`,
+                          height: "100%",
+                          flexShrink: 0,
+                          position: "relative",
+                          filter: "invert(24%) sepia(31%) saturate(10000%) hue-rotate(45deg) brightness(125%) contrast(121%)"
+                        }}
+                      >
+                        <Image
+                          src={src}
+                          alt={`slide ${i}`}
+                          fill
+                          style={{ objectFit: "contain" }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
           </section>
         </div>
       </div>

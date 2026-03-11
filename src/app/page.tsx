@@ -66,12 +66,8 @@ export default function Home() {
           <ThreeScene />
         </div>
         <div
-          className="fixed inset-0 w-full h-full pointer-events-none
-  bg-[radial-gradient(hsl(38_33%_70%_/_0.50)_1px,transparent_1px)]
-  dark:bg-[radial-gradient(hsl(38_33%_10%_/_0.50)_1px,transparent_1px)]
-  bg-[size:16px_16px]
-  bg-[hsl(38_33%_90%)]
-  dark:bg-[hsl(38_33%_5%)]"
+          className="fixed inset-0 w-full h-full pointer-events-none bg-[radial-gradient(hsl(38,33%,70%)_1px,transparent_1px)] 
+        dark:bg-[radial-gradient(hsl(38,33%,10%)_1px,transparent_1px)] bg-[size:16px_16px] bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]  "
         >
           {/* <Intro /> */}
         </div>

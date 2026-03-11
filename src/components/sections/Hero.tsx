@@ -55,7 +55,7 @@ function Model() {
 }
 const Hero = () => {
   return (
-    <div className=" w-full md:h-[500px] ">
+    <div className=" w-full md:h-[400px] ">
       <Canvas camera={{ position: [10, 10, 10], fov: 45 }}>
         <Environment preset="apartment" />
         <Suspense fallback={null}>

@@ -6,10 +6,10 @@ const Nav = () => {
 <nav className="w-full sticky top-0">
   <ul
     style={{ fontFamily: "var(--font-syne)" }}
-    className={`${syne.variable} flex flex-row w-full min-w-0 items-center justify-center border-b-2 
-     border-accent-foreground font-bold tracking-wide text-nowrap overflow-x-auto
+    className={`${syne.variable} flex flex-row w-full min-w-0 items-center justify-center justify-evenly border-b-2 
+     border-accent-foreground font-bold tracking-wide text-nowrap overflow-x-auto bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]
       /* Small: Mobile-first defaults */
-      text-md gap-2 py-2
+      text-md gap-2 py-4
       /* Medium: Tablet */
       md:text-xl md:gap-4 md:px-2
       /* Large: Desktop */
@@ -24,7 +24,10 @@ const Nav = () => {
           md:p-4 
           lg:px-6"
       >
-        <a href={`#${item.toLowerCase()}`} className="nav-link">/{item}</a>
+        <div className="flex">
+          <p className=" hidden md:block">/</p>
+          <a href={`#${item.toLowerCase()}`} className="nav-link">{item}</a>
+        </div>
       </li>
     ))}
   </ul>
