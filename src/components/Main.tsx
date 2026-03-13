@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Nav from "./Nav";
@@ -16,6 +16,11 @@ import {
 
 import Image from "next/image";
 
+import Phone from "./Phone.tsx";
+import BioItem from "./ui/BioItem";
+
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+
 gsap.registerPlugin(
   useGSAP,
   ScrambleTextPlugin,
@@ -25,11 +30,14 @@ gsap.registerPlugin(
 );
 
 const Main = () => {
-  const [current, setCurrent] = useState(0);
-  const images = ["./dogAsset2.svg"];
-
   const container = useRef(null);
   const navRef = useRef(null);
+
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains("dark"));
+  }, []);
 
   useGSAP(
     () => {
@@ -116,19 +124,19 @@ const Main = () => {
       >
         {/* Main Container */}
         <div
-          className="w-full max-w-[1100px] min-w-0 p-6 md:p-10 border-dashed md:border-2
+          className="w-full max-w-[1100px] min-w-0 p-6 md:p-10 border-dashed md:border-1
           border-black/70 dark:border-white/70 md:my-8
           bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
           id="smooth-content"
         >
           {/* Header */}
-          <div className="flex flex-col tracking-wide md:text-9xl text-5xl pt-6 pb-2 text-center">
+          <div className="flex flex-col tracking-wide md:text-9xl text-5xl pt-4 pb-0 text-center">
             <div className="flex flex-wrap gap-2 items-center justify-center leading-[85%] font-heading">
               <h1 className="hero-line">TRISTAN</h1>
               <h1 className="hero-line">JOHNSTON</h1>
             </div>
 
-            <h3 className="subheading hero-sub md:text-4xl text-xl mt-2 mb-4 tracking-tighter md:tracking-wide" >
+            <h3 className="subheading hero-sub md:text-3xl text-lg  mb-4 tracking-tighter md:tracking-wide">
               Software Engineer · Full-Stack Developer
             </h3>
           </div>
@@ -141,12 +149,16 @@ const Main = () => {
             <Nav />
           </div>
 
+          <div className="w-full"><p>hello</p></div>
+
           {/* Content Grid */}
-          <section className="grid grid-cols-1 md:grid-cols-12 w-full mt-6">
+
+          <section className="grid grid-cols-1 md:grid-cols-12 w-full md:mt-6">
             {/* About Section */}
             <section
               id="about"
-              className="flex flex-col col-span-8 md:border-r-2 p-6 md:pr-8 pt-8 border-accent-foreground/10 border-dashed reveal"
+              className="flex flex-col col-span-8 md:border-r-1 p-4 md:pr-8 pt-8 md:pt-4 
+              border-accent-foreground/10 border-dashed reveal"
               style={{ fontFamily: "var(--font-syne)" }}
             >
               <IntroductionBlurb />
@@ -155,62 +167,66 @@ const Main = () => {
             {/* Phone Section */}
             <section
               id="about"
-              className="flex flex-col col-span-4 justify-center items-center p-6 md:pl-8 pt-8 reveal"
+              className="flex flex-col col-span-4 justify-center items-center p-6 md:pl-8 pt-8 reveal "
               style={{ fontFamily: "var(--font-syne)" }}
             >
-              <div style={{ position: "relative" }}>
-                {/* Phone Frame */}
-                <Image
-                  src="./phoneAsset1.svg"
-                  alt="phone"
-                  width={333}
-                  height={333}
-                  style={{ position: "relative", zIndex: 2 }}
-                />
+              <div className="w-full h-full flex flex-col [&_h3]:text-lg  [&_a]:text-lg">
+                <BioItem label={"location"}>
+                  <h3>Birmingham, AL</h3>
+                </BioItem>
+                <BioItem label={"Focus"}>
+                  <h3>Full-Stack Systems</h3>
+                  <h3>Data Visualization</h3>
+                </BioItem>
+                <BioItem label={"Stack"}>
+                  <h3>TypeScript</h3>
+                  <h3>React / Next.js</h3>
+                  <h3>Python</h3>
+                  <h3>PostgreSQL / PostGIS</h3>
+                </BioItem>
+                <BioItem label={"Links"}>
+                  <div className="flex flex-col w-fit">
+                    <a
+                      href="https://github.com/TristanCC"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="border-b border-dashed border-orange-500 w-fit
+    px-1 py-0.5 transition-colors duration-300
+    hover:text-orange-500"
+                    >
+                      GitHub ↗
+                    </a>
 
-                {/* Swipeable Content */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "12%",
-                    left: "10%",
-                    width: "80%",
-                    height: "76%",
-                    overflow: "hidden",
-                    zIndex: 1,
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      width: `${images.length * 100}%`,
-                      height: "100%",
-                      transform: `translateX(-${(current * 100) / images.length}%)`,
-                      transition: "transform 0.3s ease",
-                    }}
-                  >
-                    {images.map((src, i) => (
-                      <div
-                        key={i}
-                        style={{
-                          width: `${100 / images.length}%`,
-                          height: "100%",
-                          flexShrink: 0,
-                          position: "relative",
-                          filter: "invert(24%) sepia(31%) saturate(10000%) hue-rotate(45deg) brightness(125%) contrast(121%)"
-                        }}
-                      >
-                        <Image
-                          src={src}
-                          alt={`slide ${i}`}
-                          fill
-                          style={{ objectFit: "contain" }}
-                        />
-                      </div>
-                    ))}
+                    <a
+                      href="https://linkedin.com/in/tristan-johnston-37817a282"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="border-b border-dashed border-orange-500 w-fit
+    px-1 py-0.5 transition-colors duration-300
+    hover:text-orange-500"
+                    >
+                      LinkedIn ↗
+                    </a>
+
+                    <a
+                      href="mailto:tristan.c.johnston@gmail.com"
+                      className="border-b border-dashed border-orange-500 w-fit
+    px-1 py-0.5 transition-colors duration-300
+    hover:text-orange-500"
+                    >
+                      Email ↗
+                    </a>
                   </div>
-                </div>
+                </BioItem>
               </div>
+            </section>
+            <section
+              id="work"
+              className="flex flex-col col-span-8 md:border-r-1 p-4 md:pr-8 pt-8 md:pt-4  justify-center
+              border-accent-foreground/10 border-dashed reveal"
+              style={{ fontFamily: "var(--font-syne)" }}
+            >
+              
             </section>
           </section>
         </div>

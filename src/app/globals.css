@@ -158,5 +158,5 @@
 
 .nav-link.active {
   border-bottom: 2px solid currentColor;
-  border-color: rgb(249 115 22)
+  border-color: rgb(249 115 22);
 }
