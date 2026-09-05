@@ -4,7 +4,7 @@ const Nav = () => {
     <nav className="w-full sticky top-0">
       <ul
         style={{ fontFamily: "var(--font-syne)" }}
-        className={`${syne.variable} flex flex-row w-full min-w-0  justify-center border-b-2 
+        className={`${syne.variable} flex flex-row w-full min-w-0  justify-center
      border-accent-foreground  tracking-wide text-nowrap overflow-x-auto bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]
       /* Small: Mobile-first defaults */
       text-md  py-4 2
