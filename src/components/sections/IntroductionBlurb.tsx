@@ -1,6 +1,4 @@
-import { syne } from "../../app/fonts";
-import Image from "next/image";
-import { inter } from "../../app/fonts";
+import { syne, inter } from "../../app/fonts";
 
 const IntroductionBlurb = () => {
   return (
@@ -14,8 +12,13 @@ const IntroductionBlurb = () => {
         >
           This site is designed to display some of my work. You can download my
           resume
-          <a href="" className="ml-1 text-orange-500 hover:text-orange-300 border-b-1 border-orange-500 border-dashed">
-            here. 
+          <a
+            href="/TristanJohnstonResume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-1 text-orange-500 hover:text-orange-300 border-b-1 border-orange-500 border-dashed"
+          >
+            here.
           </a>
         </p>
         {/* Section header */}
@@ -28,7 +31,7 @@ const IntroductionBlurb = () => {
               ARTICLE I — ABOUT
             </span>
             <h1 className="text-2xl md:text-3xl tracking-widest">
-              HEY, I'M TRISTAN.
+              HEY, I&apos;M TRISTAN.
             </h1>
           </div>
 
@@ -40,7 +43,7 @@ const IntroductionBlurb = () => {
         className={`text-md md:text-lg border-accent-foreground ${inter.variable}`}
         style={{ fontFamily: "var(--font-inter)" }}
       >
-        MAR. 2026 - I'm a software engineer who designs and builds full-stack
+        MAR. 2026 - I&apos;m a software engineer who designs and builds full-stack
         systems with rigorous attention to detail and care for user experience.
         I enjoy developing intuitive, user-friendly software that helps people
         navigate the world while opening the door to new perspectives.

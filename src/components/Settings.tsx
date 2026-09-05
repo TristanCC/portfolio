@@ -2,7 +2,12 @@ import { useTheme } from "next-themes";
 import { Switch } from "@/components/ui/switch";
 import { useState, useEffect } from "react";
 
-const Settings = ({ setting, setSetting }) => {
+type SettingsProps = {
+  setting: string | boolean;
+  setSetting: ((value: boolean) => void) | null;
+};
+
+const Settings = ({ setting, setSetting }: SettingsProps) => {
   const { setTheme, theme } = useTheme();
 
   const [checked, setChecked] = useState(
@@ -26,7 +31,7 @@ const Settings = ({ setting, setSetting }) => {
       setTheme(newTheme);
     } else {
       const newValue = !checked;
-      setSetting(newValue);
+      setSetting?.(newValue);
     }
   };
 

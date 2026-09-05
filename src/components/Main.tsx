@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Nav from "./Nav";
 import IntroductionBlurb from "./sections/IntroductionBlurb";
+import Work from "./sections/Work";
 import BioItem from "./ui/BioItem";
 
 import {
@@ -84,7 +85,7 @@ const Main = () => {
            animation is its reveal
       --------------------------- */
 
-      gsap.utils.toArray(".reveal").forEach((el: any) => {
+      gsap.utils.toArray<Element>(".reveal").forEach((el) => {
         if (pageFeedRef.current?.contains(el)) return;
 
         gsap.from(el, {
@@ -103,13 +104,13 @@ const Main = () => {
          Nav Active Highlight
       --------------------------- */
 
-      gsap.utils.toArray("section[id]").forEach((section: any) => {
+      gsap.utils.toArray<Element>("section[id]").forEach((section) => {
         const id = section.getAttribute("id");
 
         ScrollTrigger.create({
           trigger: section,
-          start: "top center",
-          end: "bottom center",
+          start: "top 80%",
+          end: "bottom 20%",
           toggleClass: {
             targets: `.nav-link[href="#${id}"]`,
             className: "active",
@@ -190,16 +191,19 @@ const Main = () => {
           });
         }, "-=0.05");
 
+      // Reveal the page content automatically on load
+      gsap.delayedCall(0.4, () => printingTL.current?.play());
+
       /* ---------------------------
          Smooth Scroll Nav
       --------------------------- */
 
       const links = document.querySelectorAll(".nav-link");
 
-      const handler = (e: any) => {
+      const handler = (e: Event) => {
         e.preventDefault();
-        const target = e.currentTarget.getAttribute("href");
-        ScrollSmoother.get()?.scrollTo(target, true, "top center");
+        const target = (e.currentTarget as HTMLAnchorElement).getAttribute("href");
+        ScrollSmoother.get()?.scrollTo(target as string, true, "top center");
       };
 
       links.forEach((link) => link.addEventListener("click", handler));
@@ -210,10 +214,6 @@ const Main = () => {
     },
     { scope: container },
   );
-
-  const handlePrint = () => {
-    printingTL.current?.play();
-  };
 
   /* ---------------------------
      Tear Gesture
@@ -236,7 +236,7 @@ const Main = () => {
     });
   };
 
-  const onBarPointerUp = (_e: React.PointerEvent<HTMLDivElement>) => {
+  const onBarPointerUp = () => {
     if (!tearState.current.active || !pageFeedRef.current) return;
     tearState.current.active = false;
     const el = pageFeedRef.current;
@@ -322,15 +322,6 @@ const Main = () => {
             />
           </div>
 
-          {/* Dev trigger */}
-          <button
-            type="button"
-            onClick={handlePrint}
-            className="bg-orange-500 px-4 py-2 text-white rounded z-20 cursor-pointer fixed top-0 right-0"
-          >
-            Print Page
-          </button>
-
           {/* -------------------------
               PAGE FEED WRAPPER
               — overflow hidden clips
@@ -382,7 +373,7 @@ const Main = () => {
                       </BioItem>
 
                       <BioItem label={"Links"}>
-                        <div className="flex flex-col w-fit">
+                        <div id="contact" className="flex flex-col w-fit scroll-mt-24">
                           <a
                             href="https://github.com/TristanCC"
                             target="_blank"
@@ -415,6 +406,15 @@ const Main = () => {
                       </BioItem>
                     </div>
                   </section>
+                </section>
+
+                {/* Work */}
+                <section
+                  id="work"
+                  className="p-4 md:p-8 pt-8 border-t border-accent-foreground/10 border-dashed"
+                  style={{ fontFamily: "var(--font-syne)" }}
+                >
+                  <Work />
                 </section>
               </div>
             </div>
