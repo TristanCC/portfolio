@@ -380,7 +380,7 @@ const Main = () => {
 
           <div
             ref={pageFeedRef}
-            className="page-feed overflow-hidden border-1 border-dashed border-accent-foreground/10 bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
+            className="page-feed overflow-hidden bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
             style={{ height: 0 }}
           >
             {/* All page content lives here — no independent reveal anims */}
@@ -428,7 +428,7 @@ const Main = () => {
                             href="https://github.com/TristanCC"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="border-b border-dashed border-orange-500 w-fit
+                            className="border-b border-orange-500 w-fit
                             px-1 py-0.5 transition-colors duration-300
                             hover:text-orange-500"
                           >
@@ -438,7 +438,7 @@ const Main = () => {
                             href="https://linkedin.com/in/tristan-johnston-37817a282"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="border-b border-dashed border-orange-500 w-fit
+                            className="border-b border-orange-500 w-fit
                             px-1 py-0.5 transition-colors duration-300
                             hover:text-orange-500"
                           >
@@ -446,7 +446,7 @@ const Main = () => {
                           </a>
                           <a
                             href="mailto:tristan.c.johnston@gmail.com"
-                            className="border-b border-dashed border-orange-500 w-fit
+                            className="border-b border-orange-500 w-fit
                             px-1 py-0.5 transition-colors duration-300
                             hover:text-orange-500"
                           >

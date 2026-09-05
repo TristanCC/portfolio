@@ -34,7 +34,7 @@ const jobs: Job[] = [
 
 const Experience = () => {
   return (
-    <div className="leading-relaxed tracking-wider space-y-8">
+    <div className="leading-relaxed space-y-8">
       <div className="flex justify-between border-b-2 border-accent-foreground pb-2">
         <div className="flex flex-col items-start justify-end px-2 font-bold grow">
           <span
@@ -44,7 +44,7 @@ const Experience = () => {
             ARTICLE II — EXPERIENCE
           </span>
           <h1
-            className="text-2xl md:text-3xl tracking-widest"
+            className="text-3xl md:text-5xl tracking-wide"
             style={{ fontFamily: "var(--font-syne)" }}
           >
             CAREER HISTORY
@@ -52,7 +52,7 @@ const Experience = () => {
         </div>
       </div>
 
-      <div className="pl-6 md:pl-8 border-l-2 border-dashed border-orange-500/40 space-y-10">
+      <div className="pl-6 md:pl-8 border-l-2 border-accent-foreground/30 space-y-10">
         {jobs.map((job) => (
           <div key={job.role} className="relative">
             <span
@@ -62,12 +62,12 @@ const Experience = () => {
 
             <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1">
               <h3
-                className="text-xl md:text-2xl tracking-wide"
+                className="text-lg md:text-xl tracking-wide"
                 style={{ fontFamily: "var(--font-syne)" }}
               >
                 {job.role}
               </h3>
-              <span className="text-sm uppercase tracking-wider text-orange-500 shrink-0">
+              <span className="text-sm uppercase tracking-wider text-muted-foreground shrink-0">
                 {job.dates}
               </span>
             </div>
@@ -80,10 +80,10 @@ const Experience = () => {
               {job.bullets.map((bullet) => (
                 <li
                   key={bullet}
-                  className="flex gap-2 text-md"
+                  className="flex gap-2 text-sm md:text-base"
                   style={{ fontFamily: "var(--font-inter)" }}
                 >
-                  <span className="text-orange-500 shrink-0">—</span>
+                  <span className="text-muted-foreground shrink-0">—</span>
                   <span>{bullet}</span>
                 </li>
               ))}

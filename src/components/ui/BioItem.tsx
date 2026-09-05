@@ -7,7 +7,7 @@ type BioItemProps = {
 
 const BioItem = ({ label, children }: BioItemProps) => (
   <div className="mb-6">
-    <h1 className="text-md uppercase tracking-wider text-orange-500 font-medium ">
+    <h1 className="text-sm uppercase tracking-wider text-muted-foreground font-medium">
       {label}
     </h1>
     <div className="text-base">{children}</div>

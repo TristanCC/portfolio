@@ -2,11 +2,11 @@ import { syne, inter } from "../../app/fonts";
 
 const IntroductionBlurb = () => {
   return (
-    <div className="leading-relaxed tracking-wider space-y-4">
+    <div className="leading-relaxed space-y-4">
       {/* Resume notice */}
       <div className="flex flex-col gap-4 border-b-2 border-accent-foreground pb-2">
         <p
-          className={`text-md md:text-lg font-black px-4 mb-4  border-l-2 border-orange-500 border-solid
+          className={`text-base md:text-lg font-black px-4 mb-4  border-l-2 border-orange-500 border-solid
           bg-[hsl(38,33%,5%,0%)]  ${syne.variable}`}
           style={{ fontFamily: "var(--font-syne)" }}
         >
@@ -16,7 +16,7 @@ const IntroductionBlurb = () => {
             href="/TristanJohnstonResume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-1 text-orange-500 hover:text-orange-300 border-b-1 border-orange-500 border-dashed"
+            className="ml-1 text-orange-500 hover:text-orange-300 border-b border-orange-500"
           >
             here.
           </a>
@@ -30,7 +30,7 @@ const IntroductionBlurb = () => {
             <span className="text-lg md:text-xl tracking-wider">
               ARTICLE I — ABOUT
             </span>
-            <h1 className="text-2xl md:text-3xl tracking-widest">
+            <h1 className="text-3xl md:text-5xl tracking-wide">
               HEY, I&apos;M TRISTAN.
             </h1>
           </div>
@@ -40,7 +40,7 @@ const IntroductionBlurb = () => {
 
       {/* Body text */}
       <p
-        className={`text-md md:text-lg border-accent-foreground ${inter.variable}`}
+        className={`text-base md:text-lg border-accent-foreground ${inter.variable}`}
         style={{ fontFamily: "var(--font-inter)" }}
       >
         MAR. 2026 - I&apos;m a software engineer who designs and builds full-stack
@@ -52,15 +52,15 @@ const IntroductionBlurb = () => {
 
       <div>
         <p
-          className={`text-md md:text-lg ${inter.variable}`}
+          className={`text-base md:text-lg ${inter.variable}`}
           style={{ fontFamily: "var(--font-inter)" }}
         >
           I’m especially interested in <b>human-centered design</b>, i.e. systems
           foundationally rooted in user empathy, wellbeing, and growth.
         </p>
-        
+
       </div>
-      
+
     </div>
   );
 };

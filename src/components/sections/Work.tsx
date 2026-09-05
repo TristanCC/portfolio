@@ -24,7 +24,7 @@ const projects: Project[] = [
 
 const Work = () => {
   return (
-    <div className="leading-relaxed tracking-wider space-y-6">
+    <div className="leading-relaxed space-y-8">
       <div className="flex justify-between border-b-2 border-accent-foreground pb-2">
         <div className="flex flex-col items-start justify-end px-2 font-bold grow">
           <span
@@ -34,7 +34,7 @@ const Work = () => {
             ARTICLE III — WORK
           </span>
           <h1
-            className="text-2xl md:text-3xl tracking-widest"
+            className="text-3xl md:text-5xl tracking-wide"
             style={{ fontFamily: "var(--font-syne)" }}
           >
             SELECTED PROJECTS
@@ -42,37 +42,50 @@ const Work = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {projects.map((project) => (
-          <a
-            key={project.title}
-            href={project.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex flex-col gap-3 p-4 border border-dashed border-accent-foreground/30
-            hover:border-orange-500 transition-colors duration-300"
-          >
-            <h3
-              className="text-xl tracking-wide group-hover:text-orange-500 transition-colors duration-300"
-              style={{ fontFamily: "var(--font-syne)" }}
+      <div className="space-y-10">
+        {projects.map((project, i) => {
+          const isFeatured = i === 0;
+          return (
+            <a
+              key={project.title}
+              href={project.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`group flex flex-col gap-3 ${
+                isFeatured ? "" : "pt-8 border-t border-accent-foreground/10"
+              }`}
             >
-              {project.title} ↗
-            </h3>
-            <p className="text-md" style={{ fontFamily: "var(--font-inter)" }}>
-              {project.description}
-            </p>
-            <div className="flex flex-wrap gap-2 mt-auto pt-2">
-              {project.stack.map((tech) => (
-                <span
-                  key={tech}
-                  className="text-xs uppercase tracking-wider px-2 py-1 border border-dashed border-orange-500/60 text-orange-500"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </a>
-        ))}
+              <h3
+                className={`${
+                  isFeatured ? "text-2xl md:text-3xl" : "text-lg md:text-xl"
+                } tracking-wide group-hover:text-orange-500 transition-colors duration-300`}
+                style={{ fontFamily: "var(--font-syne)" }}
+              >
+                {project.title} ↗
+              </h3>
+              <p
+                className={
+                  isFeatured
+                    ? "text-base md:text-lg"
+                    : "text-sm md:text-base"
+                }
+                style={{ fontFamily: "var(--font-inter)" }}
+              >
+                {project.description}
+              </p>
+              <div className="flex flex-wrap gap-2 pt-1">
+                {project.stack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="text-xs uppercase tracking-wider px-2 py-1 border border-accent-foreground/20 text-muted-foreground"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </a>
+          );
+        })}
       </div>
     </div>
   );
