@@ -102,21 +102,43 @@ const Main = () => {
 
       /* ---------------------------
          Nav Active Highlight
+         — exactly one nav-link is
+           active at a time: whichever
+           section's top is the last
+           one crossed while scrolling
       --------------------------- */
 
-      gsap.utils.toArray<Element>("section[id]").forEach((section) => {
-        const id = section.getAttribute("id");
+      const navSections = gsap.utils.toArray<HTMLElement>("section[id]");
 
-        ScrollTrigger.create({
-          trigger: section,
-          start: "top 80%",
-          end: "bottom 20%",
-          toggleClass: {
-            targets: `.nav-link[href="#${id}"]`,
-            className: "active",
-          },
+      const setActiveNav = () => {
+        const scrollPos = window.scrollY + window.innerHeight * 0.3;
+        let current: HTMLElement | null = null;
+
+        navSections.forEach((section) => {
+          if (section.offsetTop <= scrollPos) current = section;
         });
+
+        document
+          .querySelectorAll(".nav-link.active")
+          .forEach((link) => link.classList.remove("active"));
+
+        if (current) {
+          const id = (current as HTMLElement).getAttribute("id");
+          document
+            .querySelector(`.nav-link[href="#${id}"]`)
+            ?.classList.add("active");
+        }
+      };
+
+      ScrollTrigger.create({
+        trigger: "#smooth-content",
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: setActiveNav,
+        onRefresh: setActiveNav,
       });
+
+      setActiveNav();
 
       /* ---------------------------
          Pin Navigation
