@@ -153,3 +153,24 @@
   border-bottom: 2px solid currentColor;
   border-color: rgb(249 115 22);
 }
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 0.06em;
+  height: 0.72em;
+  margin-left: 0.05em;
+  background-color: currentColor;
+  vertical-align: -0.05em;
+  animation: typewriter-blink 1s steps(1) infinite;
+}
+
+@keyframes typewriter-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}

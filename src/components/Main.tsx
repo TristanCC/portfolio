@@ -61,23 +61,33 @@ const Main = () => {
 
       /* ---------------------------
          Hero Animation
+         — characters snap in one at
+           a time, typewriter-style,
+           name first then subtitle
       --------------------------- */
 
-      gsap.from(".hero-line", {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        stagger: 0.08,
-      });
+      const heroSplit = SplitText.create(".hero-line", { type: "chars" });
+      const subSplit = SplitText.create(".hero-sub", { type: "chars" });
 
-      gsap.from(".hero-sub", {
-        y: 20,
-        opacity: 0,
-        duration: 0.6,
-        ease: "power2.out",
-        delay: 0.25,
-      });
+      gsap.set(heroSplit.chars, { opacity: 0 });
+      gsap.set(subSplit.chars, { opacity: 0 });
+
+      gsap
+        .timeline()
+        .to(heroSplit.chars, {
+          opacity: 1,
+          duration: 0,
+          stagger: 0.045,
+        })
+        .to(
+          subSplit.chars,
+          {
+            opacity: 1,
+            duration: 0,
+            stagger: 0.02,
+          },
+          "+=0.15",
+        );
 
       /* ---------------------------
          Reveal Sections
@@ -321,6 +331,7 @@ const Main = () => {
             <div className="flex flex-wrap gap-2 items-center justify-center leading-[85%] font-heading">
               <h1 className="hero-line">TRISTAN</h1>
               <h1 className="hero-line">JOHNSTON</h1>
+              <span className="typewriter-cursor" aria-hidden="true" />
             </div>
             <h3 className="hero-sub md:text-3xl text-lg mb-4 tracking-tight md:tracking-wide">
               Software Engineer · Full-Stack Developer
