@@ -39,6 +39,7 @@ const TEAR_THRESHOLD = 80;
 const Main = () => {
   const container = useRef(null);
   const navRef = useRef(null);
+  const cursorRef = useRef<HTMLSpanElement>(null);
   const pageFeedRef = useRef<HTMLDivElement>(null);
   const pageInnerRef = useRef<HTMLDivElement>(null);
   const printingTL = useRef<gsap.core.Timeline | null>(null);
@@ -71,6 +72,7 @@ const Main = () => {
 
       gsap.set(heroSplit.chars, { opacity: 0 });
       gsap.set(subSplit.chars, { opacity: 0 });
+      gsap.set(cursorRef.current, { opacity: 0 });
 
       gsap
         .timeline()
@@ -87,7 +89,17 @@ const Main = () => {
             stagger: 0.02,
           },
           "+=0.15",
-        );
+        )
+        .call(() => {
+          // Cursor only appears once typing settles, at the subtitle
+          // (the last place text was actually typed) — blinks briefly,
+          // then fades so it doesn't linger as a distraction.
+          cursorRef.current?.classList.add("is-blinking");
+          gsap.delayedCall(2.2, () => {
+            cursorRef.current?.classList.remove("is-blinking");
+            gsap.to(cursorRef.current, { opacity: 0, duration: 0.6 });
+          });
+        });
 
       /* ---------------------------
          Reveal Sections
@@ -331,10 +343,14 @@ const Main = () => {
             <div className="flex flex-wrap gap-2 items-center justify-center leading-[85%] font-heading">
               <h1 className="hero-line">TRISTAN</h1>
               <h1 className="hero-line">JOHNSTON</h1>
-              <span className="typewriter-cursor" aria-hidden="true" />
             </div>
             <h3 className="hero-sub md:text-3xl text-lg mb-4 tracking-tight md:tracking-wide">
               Software Engineer · Full-Stack Developer
+              <span
+                ref={cursorRef}
+                className="typewriter-cursor"
+                aria-hidden="true"
+              />
             </h3>
           </div>
 
