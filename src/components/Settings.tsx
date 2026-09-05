@@ -8,26 +8,26 @@ type SettingsProps = {
 };
 
 const Settings = ({ setting, setSetting }: SettingsProps) => {
-  const { setTheme, theme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
 
   const [checked, setChecked] = useState(
     setting === "theme-toggle"
-      ? theme === "dark"
+      ? resolvedTheme === "dark"
       : Boolean(setting)
   );
 
   // Keep `checked` in sync with external changes
   useEffect(() => {
     if (setting === "theme-toggle") {
-      setChecked(theme === "dark");
+      setChecked(resolvedTheme === "dark");
     } else {
       setChecked(Boolean(setting));
     }
-  }, [theme, setting]);
+  }, [resolvedTheme, setting]);
 
   const handleToggle = () => {
     if (setting === "theme-toggle") {
-      const newTheme = theme === "light" ? "dark" : "light";
+      const newTheme = resolvedTheme === "dark" ? "light" : "dark";
       setTheme(newTheme);
     } else {
       const newValue = !checked;
