@@ -170,8 +170,7 @@ const Main = () => {
       printingTL.current = gsap.timeline({ paused: true });
 
       // Measure content height at play-time via a functional tween
-      const getContentHeight = () =>
-        pageInnerRef.current?.scrollHeight ?? 600;
+      const getContentHeight = () => pageInnerRef.current?.scrollHeight ?? 600;
 
       printingTL.current
         // 1. Bar sweeps
@@ -224,7 +223,9 @@ const Main = () => {
 
       const handler = (e: Event) => {
         e.preventDefault();
-        const target = (e.currentTarget as HTMLAnchorElement).getAttribute("href");
+        const target = (e.currentTarget as HTMLAnchorElement).getAttribute(
+          "href",
+        );
         ScrollSmoother.get()?.scrollTo(target as string, true, "top center");
       };
 
@@ -307,8 +308,10 @@ const Main = () => {
               HERO HEADER
           ------------------------- */}
 
-          <div className="flex flex-col tracking-wide md:text-9xl text-5xl text-center p-6 
-          md:p-10 pb-0 bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]">
+          <div
+            className="flex flex-col tracking-wide md:text-9xl text-5xl text-center p-6 
+          md:p-10 pb-0 bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
+          >
             <div className="flex flex-wrap gap-2 items-center justify-center leading-[85%] font-heading">
               <h1 className="hero-line">TRISTAN</h1>
               <h1 className="hero-line">JOHNSTON</h1>
@@ -395,7 +398,10 @@ const Main = () => {
                       </BioItem>
 
                       <BioItem label={"Links"}>
-                        <div id="contact" className="flex flex-col w-fit scroll-mt-24">
+                        <div
+                          id="contact"
+                          className="flex flex-col w-fit scroll-mt-24"
+                        >
                           <a
                             href="https://github.com/TristanCC"
                             target="_blank"
@@ -422,7 +428,7 @@ const Main = () => {
                             px-1 py-0.5 transition-colors duration-300
                             hover:text-orange-500"
                           >
-                            Email ↗
+                            Tristan.C.Johnston@gmail.com ↗
                           </a>
                         </div>
                       </BioItem>

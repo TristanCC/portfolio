@@ -14,7 +14,7 @@ const Nav = () => {
       lg:text-2xl lg:gap-8 lg:px-4
       `}
       >
-        {["ABOUT", "WORK", "CONTACT", "RESUME"].map((item) => {
+        {["ABOUT", "WORK", "RESUME"].map((item) => {
           const isResume = item === "RESUME";
           return (
             <li key={item} className="self-center font-medium">
