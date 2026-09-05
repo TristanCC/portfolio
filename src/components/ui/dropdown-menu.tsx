@@ -44,7 +44,9 @@ function DropdownMenuContent({
   className,
   sideOffset = 4,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.Content>) {
+}: React.ComponentProps<typeof DropdownMenuPrimitive.Content> & {
+  onOpenAutoFocus?: (event: Event) => void
+}) {
   const [container, setContainer] = React.useState<HTMLElement | null>(null)
   React.useEffect(() => {
     setContainer(document.getElementById("portal-root"))
