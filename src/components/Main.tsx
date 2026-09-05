@@ -434,7 +434,7 @@ const Main = () => {
                             px-1 py-0.5 transition-colors duration-300
                             hover:text-orange-500"
                           >
-                            Tristan.C.Johnston@gmail.com ↗
+                            tristan.c.johnston@gmail.com ↗
                           </a>
                         </div>
                       </BioItem>
