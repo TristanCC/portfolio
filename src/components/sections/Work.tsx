@@ -56,9 +56,7 @@ const Work = () => {
               }`}
             >
               <h3
-                className={`${
-                  isFeatured ? "text-2xl md:text-3xl" : "text-lg md:text-xl"
-                } tracking-wide group-hover:text-orange-500 transition-colors duration-300`}
+                className="text-2xl md:text-3xl tracking-wide group-hover:text-orange-500 transition-colors duration-300"
                 style={{ fontFamily: "var(--font-syne)" }}
               >
                 {project.title} ↗
