@@ -52,10 +52,13 @@ const Experience = () => {
         </div>
       </div>
 
-      <div className="relative pl-6 md:pl-8 border-l border-dashed border-accent-foreground/30 space-y-10">
+      <div className="pl-6 md:pl-8 border-l-2 border-dashed border-orange-500/40 space-y-10">
         {jobs.map((job) => (
           <div key={job.role} className="relative">
-            <span className="absolute left-0 top-2 w-2.5 h-2.5 -translate-x-1/2 rounded-full bg-orange-500" />
+            <span
+              className="absolute -left-6 md:-left-8 top-2 w-3 h-3 -translate-x-1/2 rounded-full
+              bg-orange-500 ring-4 ring-[hsl(38,33%,90%)] dark:ring-[hsl(38,33%,5%)]"
+            />
 
             <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1">
               <h3

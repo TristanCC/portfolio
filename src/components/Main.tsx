@@ -209,6 +209,11 @@ const Main = () => {
               // Swap height to auto so the layout is normal after printing
               gsap.set(pageFeedRef.current, { height: "auto" });
               hasPrinted.current = true;
+
+              // The nav pin + active-highlight triggers were measured
+              // against the collapsed (height: 0) content at mount time —
+              // recompute their boundaries now that the real height exists.
+              ScrollTrigger.refresh();
             },
           });
         }, "-=0.05");
@@ -227,7 +232,7 @@ const Main = () => {
         const target = (e.currentTarget as HTMLAnchorElement).getAttribute(
           "href",
         );
-        ScrollSmoother.get()?.scrollTo(target as string, true, "top center");
+        ScrollSmoother.get()?.scrollTo(target as string, true, "top 140px");
       };
 
       links.forEach((link) => link.addEventListener("click", handler));
