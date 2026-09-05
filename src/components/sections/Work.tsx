@@ -31,7 +31,7 @@ const Work = () => {
             className="text-lg md:text-xl tracking-wider"
             style={{ fontFamily: "var(--font-syne)" }}
           >
-            ARTICLE II — WORK
+            ARTICLE III — WORK
           </span>
           <h1
             className="text-2xl md:text-3xl tracking-widest"

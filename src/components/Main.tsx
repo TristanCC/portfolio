@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Nav from "./Nav";
 import IntroductionBlurb from "./sections/IntroductionBlurb";
+import Experience from "./sections/Experience";
 import Work from "./sections/Work";
 import BioItem from "./ui/BioItem";
 
@@ -434,6 +435,15 @@ const Main = () => {
                       </BioItem>
                     </div>
                   </section>
+                </section>
+
+                {/* Experience */}
+                <section
+                  id="experience"
+                  className="p-4 md:p-8 pt-8 border-t border-accent-foreground/10 border-dashed"
+                  style={{ fontFamily: "var(--font-syne)" }}
+                >
+                  <Experience />
                 </section>
 
                 {/* Work */}
