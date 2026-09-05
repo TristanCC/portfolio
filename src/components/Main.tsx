@@ -182,18 +182,24 @@ const Main = () => {
          The illusion: content starts
          translated UP by its full
          height — tucked inside the
-         machine above the printer bar.
-         Container height grows AND
-         content descends in sync, both
-         power1.inOut, so text appears
-         to physically move WITH the
-         paper through the slot.
+         machine above the printer bar
+         — and descends into view.
+
+         The page-feed container is
+         sized to its FINAL height up
+         front (not animated) so the
+         document's total scroll height,
+         and the native scrollbar, stay
+         static throughout — only the
+         inner content's position moves.
       --------------------------- */
 
-      printingTL.current = gsap.timeline({ paused: true });
+      const contentHeight = pageInnerRef.current?.scrollHeight ?? 600;
 
-      // Measure content height at play-time via a functional tween
-      const getContentHeight = () => pageInnerRef.current?.scrollHeight ?? 600;
+      gsap.set(pageFeedRef.current, { height: contentHeight });
+      gsap.set(pageInnerRef.current, { y: -contentHeight });
+
+      printingTL.current = gsap.timeline({ paused: true });
 
       printingTL.current
         // 1. Bar sweeps
@@ -203,42 +209,25 @@ const Main = () => {
           { width: "100%", duration: 0.6, ease: "power2.inOut" },
         )
 
-        // 2. Container grows + content descends simultaneously.
-        //    Both share the same ease + duration so they stay locked —
-        //    the content top always sits exactly at the printer bar.
-        .add(() => {
-          const h = getContentHeight();
-
-          // Set content to start fully above the printer bar
-          gsap.set(pageInnerRef.current, { y: -h });
-
-          const DURATION = 2.6;
-          const EASE = "power1.inOut";
-
-          // Container opens to reveal the space
-          gsap.fromTo(
-            pageFeedRef.current,
-            { height: 0 },
-            { height: h, duration: DURATION, ease: EASE },
-          );
-
-          // Content descends in lockstep — paper feeding out of the slot
-          gsap.to(pageInnerRef.current, {
+        // 2. Content descends — paper feeding out of the slot
+        .to(
+          pageInnerRef.current,
+          {
             y: 0,
-            duration: DURATION,
-            ease: EASE,
+            duration: 2.6,
+            ease: "power1.inOut",
             onComplete: () => {
-              // Swap height to auto so the layout is normal after printing
+              // Let the container adapt to future reflows (e.g. resize)
               gsap.set(pageFeedRef.current, { height: "auto" });
               hasPrinted.current = true;
 
               // The nav pin + active-highlight triggers were measured
-              // against the collapsed (height: 0) content at mount time —
-              // recompute their boundaries now that the real height exists.
+              // before content settled — recompute their boundaries now.
               ScrollTrigger.refresh();
             },
-          });
-        }, "-=0.05");
+          },
+          "-=0.05",
+        );
 
       // Reveal the page content automatically on load
       gsap.delayedCall(0.4, () => printingTL.current?.play());
