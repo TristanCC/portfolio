@@ -1,11 +1,26 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 type Project = {
   title: string;
   description: string;
   stack: string[];
   href: string;
+  video?: string;
+  caption?: string;
 };
 
 const projects: Project[] = [
+  {
+    title: "Birmingham Parcel Data Visualization",
+    description:
+      "An interactive 3D geospatial visualization of value-per-acre parcel data using Deck.gl and MapLibre, highlighting municipal land usage efficiency across 50k+ parcels. Municipal parcel data was wrangled and standardized with Python, served from a Dockerized PostGIS database using spatial index queries and dynamic color interpolation.",
+    stack: ["Next.js", "React", "PostGIS", "Deck.gl", "Docker"],
+    href: "https://github.com/TristanCC/Jeffco-Value-Per-Acre",
+    video: "/parcel.mp4",
+    caption: "FIG. 1 — NAVIGATING THE PARCEL MAP",
+  },
   {
     title: "RAG PDF Search",
     description:
@@ -13,14 +28,45 @@ const projects: Project[] = [
     stack: ["Next.js", "FastAPI", "PostgreSQL", "pgvector", "OpenAI API"],
     href: "https://github.com/TristanCC/pdf-rag-search",
   },
-  {
-    title: "Birmingham Parcel Data Visualization",
-    description:
-      "An interactive 3D geospatial visualization of value-per-acre parcel data using Deck.gl and MapLibre, highlighting municipal land usage efficiency across 50k+ parcels. Municipal parcel data was wrangled and standardized with Python, served from a Dockerized PostGIS database using spatial index queries and dynamic color interpolation.",
-    stack: ["Next.js", "React", "PostGIS", "Deck.gl", "Docker"],
-    href: "https://github.com/TristanCC/Jeffco-Value-Per-Acre",
-  },
 ];
+
+const ProjectVideo = ({ src }: { src: string }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+
+    // Don't fetch or play this until it's actually scrolled into
+    // view -- it's large, and there's no reason to load it for a
+    // visitor who never gets this far down the page.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.play().catch(() => {});
+        } else {
+          el.pause();
+        }
+      },
+      { threshold: 0.25 },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={videoRef}
+      className="w-full block aspect-video bg-accent-foreground/5"
+      src={src}
+      muted
+      loop
+      playsInline
+      preload="none"
+    />
+  );
+};
 
 const Work = () => {
   return (
@@ -61,6 +107,18 @@ const Work = () => {
               >
                 {project.title} ↗
               </h3>
+
+              {project.video && (
+                <figure className="w-full">
+                  <ProjectVideo src={project.video} />
+                  {project.caption && (
+                    <figcaption className="text-xs uppercase tracking-wider text-muted-foreground mt-2">
+                      {project.caption}
+                    </figcaption>
+                  )}
+                </figure>
+              )}
+
               <p
                 className={
                   isFeatured
