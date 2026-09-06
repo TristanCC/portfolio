@@ -92,13 +92,13 @@ const Main = () => {
         )
         .call(() => {
           // Cursor only appears once typing settles, at the subtitle
-          // (the last place text was actually typed) — blinks briefly,
-          // then fades so it doesn't linger as a distraction.
+          // (the last place text was actually typed) — then blinks
+          // indefinitely, like a resting terminal cursor.
           cursorRef.current?.classList.add("is-blinking");
-          gsap.delayedCall(2.2, () => {
-            cursorRef.current?.classList.remove("is-blinking");
-            gsap.to(cursorRef.current, { opacity: 0, duration: 0.6 });
-          });
+
+          // The page unfold is gated on typing finishing, not a fixed
+          // delay from page load, so it never starts mid-sentence.
+          gsap.delayedCall(0.3, () => printingTL.current?.play());
         });
 
       /* ---------------------------
@@ -229,8 +229,8 @@ const Main = () => {
           "-=0.05",
         );
 
-      // Reveal the page content automatically on load
-      gsap.delayedCall(0.4, () => printingTL.current?.play());
+      // Played once the hero typing timeline finishes (see its .call()
+      // above) instead of on a fixed delay from page load.
 
       /* ---------------------------
          Smooth Scroll Nav
