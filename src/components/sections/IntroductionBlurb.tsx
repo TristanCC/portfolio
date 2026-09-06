@@ -4,8 +4,11 @@ import { useEffect, useRef } from "react";
 import { textmode, TextmodeVideo } from "textmode.js";
 import { syne, inter } from "../../app/fonts";
 
+// Matches the parcel video's actual 1920x1080 (16:9) source -- a
+// mismatched aspect ratio here is what causes letterboxing, since
+// image() fits the source into the canvas preserving its own ratio.
 const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 600;
+const CANVAS_HEIGHT = 450;
 
 const IntroductionBlurb = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -37,7 +40,11 @@ const IntroductionBlurb = () => {
     t.draw(() => {
       t.background(0);
       if (video) {
-        t.image(video, CANVAS_WIDTH, CANVAS_HEIGHT);
+        // No explicit width/height: those are measured in grid cells,
+        // not pixels, so passing the canvas's pixel dimensions here
+        // was asking for an image hundreds of cells too large. Omitting
+        // them uses image()'s own aspect-ratio-preserving fit instead.
+        t.image(video);
       }
     });
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Nav from "./Nav";
@@ -15,6 +15,7 @@ import {
   ScrambleTextPlugin,
   SplitText,
 } from "gsap/all";
+import { textmode, TextmodeImage } from "textmode.js";
 
 gsap.registerPlugin(
   useGSAP,
@@ -310,6 +311,54 @@ const Main = () => {
     }
   };
 
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  // Matches parcel-thumbnail.jpg's actual 1280x720 (16:9) size -- a
+  // mismatched aspect ratio here is what causes letterboxing, since
+  // image() fits the source into the canvas preserving its own ratio.
+  const CANVAS_WIDTH = 800;
+  const CANVAS_HEIGHT = 450;
+
+  useEffect(() => {
+    // textmode.js talks to a real <canvas> + WebGL2 context, so this can
+    // only run once that element actually exists in the DOM (client-side,
+    // after mount) -- not at module scope, and not during SSR.
+    if (!canvasRef.current) return;
+
+    const t = textmode.create({
+      canvas: canvasRef.current,
+      width: CANVAS_WIDTH,
+      height: CANVAS_HEIGHT,
+    });
+
+    let video: TextmodeImage | undefined;
+    let cancelled = false;
+
+    t.setup(async () => {
+      const loaded = await t.loadImage("/parcel-thumbnail.jpg");
+      if (cancelled) return;
+      video = loaded;
+      video.characters(" .:-=+*#%@");
+      video.cellColorMode("sampled");
+    });
+
+    t.draw(() => {
+      t.background(0);
+
+      if (video) {
+        // No explicit width/height: those are measured in grid cells,
+        // not pixels, so passing the canvas's pixel dimensions here
+        // was asking for an image hundreds of cells too large. Omitting
+        // them uses image()'s own aspect-ratio-preserving fit instead.
+        t.image(video);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+      t.destroy();
+    };
+  }, []);
+
   return (
     <div className="flex flex-col items-center relative z-0" ref={container}>
       <div
@@ -341,6 +390,12 @@ const Main = () => {
               className="flex flex-col tracking-wide md:text-9xl text-5xl text-center p-6
             md:p-10 pb-0 bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
             >
+              <canvas
+                ref={canvasRef}
+                width={CANVAS_WIDTH}
+                height={CANVAS_HEIGHT}
+                className="absolute top-0 left-0 w-full overflow-hidden"
+              ></canvas>
               <div className="flex flex-wrap gap-2 items-center justify-center leading-[85%] font-heading">
                 <h1 className="hero-line">TRISTAN</h1>
                 <h1 className="hero-line">JOHNSTON</h1>
