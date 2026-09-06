@@ -58,7 +58,7 @@ const ProjectVideo = ({ src }: { src: string }) => {
   return (
     <video
       ref={videoRef}
-      className="w-full block aspect-[215/174] bg-accent-foreground/5"
+      className="w-full block aspect-video bg-accent-foreground/5"
       src={src}
       muted
       loop
@@ -108,35 +108,63 @@ const Work = () => {
                 {project.title} ↗
               </h3>
 
-              {project.video && (
-                <figure className="w-full max-w-sm md:max-w-md">
-                  <ProjectVideo src={project.video} />
-                  {project.caption && (
-                    <figcaption className="text-xs uppercase tracking-wider text-muted-foreground mt-2">
-                      {project.caption}
-                    </figcaption>
-                  )}
-                </figure>
-              )}
-
-              <p
-                className={
-                  isFeatured ? "text-base md:text-lg" : "text-sm md:text-base"
-                }
-                style={{ fontFamily: "var(--font-inter)" }}
-              >
-                {project.description}
-              </p>
-              <div className="flex flex-wrap gap-2 pt-1">
-                {project.stack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="text-xs uppercase tracking-wider px-2 py-1 border border-accent-foreground/20 text-muted-foreground"
+              {project.video ? (
+                <div className="flex flex-col md:flex-row gap-6 md:gap-8 md:items-start">
+                  <figure className="w-full md:w-1/2 md:order-2">
+                    <ProjectVideo src={project.video} />
+                    {project.caption && (
+                      <figcaption className="text-xs uppercase tracking-wider text-muted-foreground mt-2">
+                        {project.caption}
+                      </figcaption>
+                    )}
+                  </figure>
+                  <div className="flex flex-col gap-3 md:w-1/2 md:order-1">
+                    <p
+                      className={
+                        isFeatured
+                          ? "text-base md:text-lg"
+                          : "text-sm md:text-base"
+                      }
+                      style={{ fontFamily: "var(--font-inter)" }}
+                    >
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {project.stack.map((tech) => (
+                        <span
+                          key={tech}
+                          className="text-xs uppercase tracking-wider px-2 py-1 border border-accent-foreground/20 text-muted-foreground"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <p
+                    className={
+                      isFeatured
+                        ? "text-base md:text-lg"
+                        : "text-sm md:text-base"
+                    }
+                    style={{ fontFamily: "var(--font-inter)" }}
                   >
-                    {tech}
-                  </span>
-                ))}
-              </div>
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {project.stack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="text-xs uppercase tracking-wider px-2 py-1 border border-accent-foreground/20 text-muted-foreground"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </>
+              )}
             </a>
           );
         })}
