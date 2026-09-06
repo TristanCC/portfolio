@@ -1,6 +1,52 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { textmode, TextmodeVideo } from "textmode.js";
 import { syne, inter } from "../../app/fonts";
 
+const CANVAS_WIDTH = 800;
+const CANVAS_HEIGHT = 600;
+
 const IntroductionBlurb = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    // textmode.js talks to a real <canvas> + WebGL2 context, so this can
+    // only run once that element actually exists in the DOM (client-side,
+    // after mount) -- not at module scope, and not during SSR.
+    if (!canvasRef.current) return;
+
+    const t = textmode.create({
+      canvas: canvasRef.current,
+      width: CANVAS_WIDTH,
+      height: CANVAS_HEIGHT,
+    });
+
+    let video: TextmodeVideo | undefined;
+    let cancelled = false;
+
+    t.setup(async () => {
+      const loaded = await t.loadVideo("/parcel.mp4");
+      if (cancelled) return;
+      video = loaded;
+      video.characters(" .:-=+*#%@");
+      video.loop(true);
+      await video.play();
+    });
+
+    t.draw(() => {
+      t.background(0);
+      if (video) {
+        t.image(video, CANVAS_WIDTH, CANVAS_HEIGHT);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+      t.destroy();
+    };
+  }, []);
+
   return (
     <div className="leading-relaxed space-y-4">
       {/* Resume notice */}
@@ -34,39 +80,24 @@ const IntroductionBlurb = () => {
               HEY, I&apos;M TRISTAN.
             </h1>
           </div>
-
         </div>
       </div>
 
-      {/* Body text */}
-      <p
-        className={`text-base md:text-lg border-accent-foreground ${inter.variable}`}
-        style={{ fontFamily: "var(--font-inter)" }}
-      >
-        MAR. 2026 - I build systems that make dense, overlooked data usable: a
-        civic tech platform serving a 12,000+ member volunteer community, a
-        geospatial tool surfacing municipal land-use patterns that were
-        previously buried in spreadsheets, a search tool that lets you
-        question a stack of PDFs directly instead of skimming them. The
-        throughline is the same each time — take information that&apos;s
-        technically available but practically unusable, and make it
-        something a person can actually act on.
-      </p>
-
-
+      {/* Body: textmode-rendered video replacing the introduction paragraph */}
       <div>
         <p
-          className={`text-base md:text-lg ${inter.variable}`}
+          className={`text-base md:text-lg border-accent-foreground ${inter.variable}`}
           style={{ fontFamily: "var(--font-inter)" }}
         >
-          I&apos;m drawn to the unglamorous half of this work as much as the
-          visible half — <b>schema design</b>, edge cases, the backend
-          plumbing nobody notices until it breaks — because that&apos;s
-          usually where the real user experience gets decided.
+          MAR. 2026 -
         </p>
-
+        <canvas
+          ref={canvasRef}
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
+          className="mt-2 w-full h-auto max-w-full"
+        />
       </div>
-
     </div>
   );
 };
