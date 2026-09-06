@@ -109,7 +109,7 @@ const Work = () => {
               </h3>
 
               {project.video && (
-                <figure className="w-full">
+                <figure className="w-full max-w-sm md:max-w-md">
                   <ProjectVideo src={project.video} />
                   {project.caption && (
                     <figcaption className="text-xs uppercase tracking-wider text-muted-foreground mt-2">
@@ -121,9 +121,7 @@ const Work = () => {
 
               <p
                 className={
-                  isFeatured
-                    ? "text-base md:text-lg"
-                    : "text-sm md:text-base"
+                  isFeatured ? "text-base md:text-lg" : "text-sm md:text-base"
                 }
                 style={{ fontFamily: "var(--font-inter)" }}
               >
