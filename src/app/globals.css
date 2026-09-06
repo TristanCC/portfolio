@@ -178,30 +178,3 @@
   }
 }
 
-/* Sides + bottom only (no top -- that edge belongs to the hero/nav
-   frame above it). Space is reserved the whole time via its height
-   being set directly (see useGSAP in Main.tsx), but the border color
-   itself starts transparent so no outline appears around the
-   not-yet-printed page before the reveal actually plays; the
-   .revealed class fades it in once printing starts. */
-.page-feed-frame {
-  border-style: dashed;
-  border-top-width: 0;
-  border-color: transparent;
-  transition: border-color 0.5s ease;
-}
-
-@media (min-width: 768px) {
-  .page-feed-frame {
-    border-width: 1px;
-    border-top-width: 0;
-  }
-}
-
-.page-feed-frame.revealed {
-  border-color: rgb(0 0 0 / 0.7);
-}
-
-.dark .page-feed-frame.revealed {
-  border-color: rgb(255 255 255 / 0.7);
-}

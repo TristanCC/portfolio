@@ -194,7 +194,8 @@ const Main = () => {
          inner content's position moves.
       --------------------------- */
 
-      const contentHeight = pageInnerRef.current?.scrollHeight ?? 600;
+      const contentHeight =
+        pageInnerRef.current?.getBoundingClientRect().height ?? 600;
 
       gsap.set(pageFeedRef.current, { height: contentHeight });
       gsap.set(pageInnerRef.current, { y: -contentHeight });
@@ -202,21 +203,14 @@ const Main = () => {
       printingTL.current = gsap.timeline({ paused: true });
 
       printingTL.current
-        // 1. The page-feed frame's border fades in right as printing
-        //    starts -- its space was already reserved, but the border
-        //    itself stays invisible until the paper actually prints.
-        .call(() => {
-          pageFeedRef.current?.classList.add("revealed");
-        })
-
-        // 2. Bar sweeps
+        // 1. Bar sweeps
         .fromTo(
           ".printer-line",
           { width: "0%" },
           { width: "100%", duration: 0.6, ease: "power2.inOut" },
         )
 
-        // 3. Content descends — paper feeding out of the slot
+        // 2. Content descends — paper feeding out of the slot
         .to(
           pageInnerRef.current,
           {
@@ -390,27 +384,33 @@ const Main = () => {
 
           {/* -------------------------
               PAGE FEED WRAPPER
-              — overflow hidden clips
-                content at the printer bar.
-                Inner div starts y:-H and
-                descends to y:0 in lockstep
-                with container height.
-                Height is reserved up
-                front (see useGSAP) so the
-                scrollbar never grows, but
-                the frame border around it
-                stays transparent until
-                the "revealed" class is
-                added when printing starts.
+              — a plain clipping mask,
+                no fill or border of its
+                own. Its height is
+                reserved up front (see
+                useGSAP) so the scrollbar
+                never grows, but it's
+                otherwise invisible —
+                you're looking straight
+                through to the page's
+                own dotted background
+                until the paper (below)
+                slides down into it.
           ------------------------- */}
 
           <div
             ref={pageFeedRef}
-            className="page-feed page-feed-frame overflow-hidden bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
+            className="page-feed overflow-hidden"
             style={{ height: 0 }}
           >
-            {/* All page content lives here — no independent reveal anims */}
-            <div ref={pageInnerRef}>
+            {/* The paper itself — background, border, and all — starts
+                translated up out of the clipping window and descends
+                to y:0. The border only becomes visible because the
+                paper physically slides into view, not via any fade. */}
+            <div
+              ref={pageInnerRef}
+              className="border-dashed md:border-x md:border-b border-black/70 dark:border-white/70 bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
+            >
               <div className="page p-6 md:p-10">
                 <section className="grid grid-cols-1 md:grid-cols-12 w-full md:mt-6">
                   {/* About */}
