@@ -30,7 +30,13 @@ const projects: Project[] = [
   },
 ];
 
-const ProjectVideo = ({ src }: { src: string }) => {
+const ProjectVideo = ({
+  src,
+  className,
+}: {
+  src: string;
+  className: string;
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -58,7 +64,7 @@ const ProjectVideo = ({ src }: { src: string }) => {
   return (
     <video
       ref={videoRef}
-      className="w-full block aspect-video bg-accent-foreground/5"
+      className={className}
       src={src}
       muted
       loop
@@ -109,16 +115,35 @@ const Work = () => {
               </h3>
 
               {project.video ? (
-                <div className="flex flex-col md:flex-row gap-6 md:gap-8 md:items-start">
-                  <figure className="w-full md:w-1/2 md:order-2">
-                    <ProjectVideo src={project.video} />
-                    {project.caption && (
-                      <figcaption className="text-xs uppercase tracking-wider text-muted-foreground mt-2">
-                        {project.caption}
-                      </figcaption>
-                    )}
-                  </figure>
-                  <div className="flex flex-col gap-3 md:w-1/2 md:order-1">
+                <div className="relative w-full md:h-[420px] lg:h-[480px] overflow-hidden">
+                  <ProjectVideo
+                    src={project.video}
+                    className="block w-full aspect-video object-cover bg-accent-foreground/5 md:absolute md:inset-0 md:h-full md:aspect-auto"
+                  />
+
+                  {/* Eased scrim: video reads at full size on the left,
+                      fading to the page background toward the right so
+                      the overlaid text stays legible. */}
+                  <div
+                    className="hidden md:block absolute inset-0 pointer-events-none
+                    bg-[linear-gradient(to_right,transparent_0%,transparent_30%,hsla(38,33%,90%,0.55)_55%,hsla(38,33%,90%,0.92)_75%,hsl(38,33%,90%)_95%)]
+                    dark:bg-[linear-gradient(to_right,transparent_0%,transparent_30%,hsla(38,33%,5%,0.55)_55%,hsla(38,33%,5%,0.92)_75%,hsl(38,33%,5%)_95%)]"
+                  />
+
+                  {project.caption && (
+                    <span
+                      className="relative z-10 mt-2 block w-fit text-xs uppercase tracking-wider text-muted-foreground
+                      md:absolute md:bottom-3 md:left-3 md:mt-0 md:bg-black/60 md:px-2 md:py-1 md:text-white md:backdrop-blur-sm"
+                    >
+                      {project.caption}
+                    </span>
+                  )}
+
+                  <div
+                    className="relative z-10 mt-4 flex flex-col gap-3
+                    md:absolute md:inset-y-0 md:right-0 md:mt-0 md:w-3/5 md:justify-center md:p-8
+                    lg:w-1/2 lg:p-10"
+                  >
                     <p
                       className={
                         isFeatured
