@@ -19,7 +19,11 @@ const Nav = () => {
           return (
             <li key={item} className="self-center font-medium">
               <a
-                href={isResume ? "/TristanJohnstonResume.pdf" : `#${item.toLowerCase()}`}
+                href={
+                  isResume
+                    ? "/TristanCJohnstonResume.pdf"
+                    : `#${item.toLowerCase()}`
+                }
                 target={isResume ? "_blank" : undefined}
                 rel={isResume ? "noopener noreferrer" : undefined}
                 className={`group relative flex items-center overflow-hidden

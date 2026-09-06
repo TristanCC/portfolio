@@ -59,7 +59,7 @@ const IntroductionBlurb = () => {
           This site is designed to display some of my work. You can download my
           resume
           <a
-            href="/TristanJohnstonResume.pdf"
+            href="/TristanCJohnstonResume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="ml-1 text-orange-500 hover:text-orange-300 border-b border-orange-500"
@@ -88,14 +88,12 @@ const IntroductionBlurb = () => {
         <p
           className={`text-base md:text-lg border-accent-foreground ${inter.variable}`}
           style={{ fontFamily: "var(--font-inter)" }}
-        >
-          MAR. 2026 -
-        </p>
+        ></p>
         <canvas
           ref={canvasRef}
           width={CANVAS_WIDTH}
           height={CANVAS_HEIGHT}
-          className="mt-2 w-full h-auto max-w-full"
+          className="mt-2 w-full h-90 max-w-full"
         />
       </div>
     </div>

@@ -15,7 +15,7 @@ const projects: Project[] = [
   {
     title: "Birmingham Parcel Data Visualization",
     description:
-      "An interactive 3D geospatial visualization of value-per-acre parcel data using Deck.gl and MapLibre, highlighting municipal land usage efficiency across 50k+ parcels. Municipal parcel data was wrangled and standardized with Python, served from a Dockerized PostGIS database using spatial index queries and dynamic color interpolation.",
+      "An interactive 3D geospatial visualization of value-per-acre parcel data using Deck.gl and MapLibre, highlighting the interactions between municipal land usage efficiency and the lived experience of Birmingham residents across 50k+ parcels. Municipal parcel data was wrangled and standardized with Python, served from a Dockerized PostGIS database using spatial index queries and dynamic color interpolation.",
     stack: ["Next.js", "React", "PostGIS", "Deck.gl", "Docker"],
     href: "https://github.com/TristanCC/Jeffco-Value-Per-Acre",
     video: "/parcel.mp4",
@@ -51,7 +51,8 @@ const ProjectVideo = ({
         if (entry.isIntersecting) {
           el.play().catch(() => {});
         } else {
-          el.pause();
+          //el.pause();
+          el.play();
         }
       },
       { threshold: 0.25 },
@@ -69,6 +70,7 @@ const ProjectVideo = ({
       muted
       loop
       playsInline
+      poster="/parcel-thumbnail.jpg"
       preload="none"
     />
   );
@@ -104,7 +106,7 @@ const Work = () => {
               target="_blank"
               rel="noopener noreferrer"
               className={`group flex flex-col gap-3 ${
-                isFeatured ? "" : "pt-8 border-t border-accent-foreground/10"
+                isFeatured ? "" : "pt-2 border-t border-accent-foreground/10 "
               }`}
             >
               <h3
@@ -115,10 +117,10 @@ const Work = () => {
               </h3>
 
               {project.video ? (
-                <div className="relative w-full md:h-[420px] lg:h-[480px] overflow-hidden">
+                <div className="relative w-full md:h-[420px] lg:h-[400px] overflow-hidden">
                   <ProjectVideo
                     src={project.video}
-                    className="block w-full aspect-video object-cover bg-accent-foreground/5 md:absolute md:inset-0 md:h-full md:aspect-auto"
+                    className="block md:w-3/4 p-2 ml-auto aspect-video object-cover  md:absolute md:inset-0 md:h-full md:aspect-auto rounded-2xl"
                   />
 
                   {/* Eased scrim: solid behind the text on the left,
@@ -133,7 +135,7 @@ const Work = () => {
 
                   {project.caption && (
                     <span
-                      className="relative z-10 mt-2 block w-fit text-xs uppercase tracking-wider text-muted-foreground
+                      className="relative z-10 mt-2 block w-fit text-xs uppercase tracking-wider text-muted-foreground 
                       md:absolute md:bottom-3 md:right-3 md:mt-0 md:bg-black/60 md:px-2 md:py-1 md:text-white md:backdrop-blur-sm"
                     >
                       {project.caption}
