@@ -58,7 +58,7 @@ const ProjectVideo = ({ src }: { src: string }) => {
   return (
     <video
       ref={videoRef}
-      className="w-full block aspect-video bg-accent-foreground/5"
+      className="w-full block aspect-[215/174] bg-accent-foreground/5"
       src={src}
       muted
       loop
