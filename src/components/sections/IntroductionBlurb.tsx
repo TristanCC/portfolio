@@ -43,10 +43,14 @@ const IntroductionBlurb = () => {
         className={`text-base md:text-lg border-accent-foreground ${inter.variable}`}
         style={{ fontFamily: "var(--font-inter)" }}
       >
-        MAR. 2026 - I&apos;m a software engineer who designs and builds full-stack
-        systems with rigorous attention to detail and care for user experience.
-        I enjoy developing intuitive, user-friendly software that helps people
-        navigate the world while opening the door to new perspectives.
+        MAR. 2026 - I build systems that make dense, overlooked data usable: a
+        civic tech platform serving a 12,000+ member volunteer community, a
+        geospatial tool surfacing municipal land-use patterns that were
+        previously buried in spreadsheets, a search tool that lets you
+        question a stack of PDFs directly instead of skimming them. The
+        throughline is the same each time — take information that&apos;s
+        technically available but practically unusable, and make it
+        something a person can actually act on.
       </p>
 
 
@@ -55,8 +59,10 @@ const IntroductionBlurb = () => {
           className={`text-base md:text-lg ${inter.variable}`}
           style={{ fontFamily: "var(--font-inter)" }}
         >
-          I’m especially interested in <b>human-centered design</b>, i.e. systems
-          foundationally rooted in user empathy, wellbeing, and growth.
+          I&apos;m drawn to the unglamorous half of this work as much as the
+          visible half — <b>schema design</b>, edge cases, the backend
+          plumbing nobody notices until it breaks — because that&apos;s
+          usually where the real user experience gets decided.
         </p>
 
       </div>

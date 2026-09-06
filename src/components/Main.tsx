@@ -413,10 +413,12 @@ const Main = () => {
                       </BioItem>
 
                       <BioItem label={"Stack"}>
-                        <h3>TypeScript</h3>
-                        <h3>React / Next.js</h3>
+                        <h3>TypeScript / JavaScript</h3>
                         <h3>Python</h3>
-                        <h3>PostgreSQL / PostGIS</h3>
+                        <h3>React / Next.js</h3>
+                        <h3>Node.js / Express / FastAPI</h3>
+                        <h3>PostgreSQL / MySQL / PostGIS</h3>
+                        <h3>Docker / AWS</h3>
                       </BioItem>
 
                       <BioItem label={"Links"}>
