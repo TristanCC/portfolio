@@ -202,14 +202,21 @@ const Main = () => {
       printingTL.current = gsap.timeline({ paused: true });
 
       printingTL.current
-        // 1. Bar sweeps
+        // 1. The page-feed frame's border fades in right as printing
+        //    starts -- its space was already reserved, but the border
+        //    itself stays invisible until the paper actually prints.
+        .call(() => {
+          pageFeedRef.current?.classList.add("revealed");
+        })
+
+        // 2. Bar sweeps
         .fromTo(
           ".printer-line",
           { width: "0%" },
           { width: "100%", duration: 0.6, ease: "power2.inOut" },
         )
 
-        // 2. Content descends — paper feeding out of the slot
+        // 3. Content descends — paper feeding out of the slot
         .to(
           pageInnerRef.current,
           {
@@ -317,56 +324,68 @@ const Main = () => {
       >
         <div
           id="smooth-content"
-          className="w-full max-w-[1100px] min-w-0 border-dashed md:border flex flex-col
-          border-black/70 dark:border-white/70 md:my-8
-          "
+          className="w-full max-w-[1100px] min-w-0 flex flex-col md:my-8"
         >
           {/* -------------------------
-              HERO HEADER
+              HERO + NAV FRAME
+              — border only wraps this
+                part immediately; the
+                page-feed's own frame
+                (below) stays invisible
+                until the paper actually
+                prints out, even though
+                its space is reserved
+                the whole time.
           ------------------------- */}
 
-          <div
-            className="flex flex-col tracking-wide md:text-9xl text-5xl text-center p-6 
-          md:p-10 pb-0 bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
-          >
-            <div className="flex flex-wrap gap-2 items-center justify-center leading-[85%] font-heading">
-              <h1 className="hero-line">TRISTAN</h1>
-              <h1 className="hero-line">JOHNSTON</h1>
-            </div>
-            <h3 className="hero-sub md:text-3xl text-lg mb-4 tracking-tight md:tracking-wide">
-              Software Engineer · Full-Stack Developer
-              <span
-                ref={cursorRef}
-                className="typewriter-cursor"
-                aria-hidden="true"
-              />
-            </h3>
-          </div>
-
-          {/* -------------------------
-              PRINTER BAR + DRAG HANDLE
-          ------------------------- */}
-
-          <div
-            ref={navRef}
-            style={{ pointerEvents: "auto" }}
-            className="relative z-10 bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
-          >
-            <Nav />
+          <div className="border-dashed md:border-t md:border-x border-black/70 dark:border-white/70 flex flex-col">
+            {/* -------------------------
+                HERO HEADER
+            ------------------------- */}
 
             <div
-              className="printer-line h-[2px] w-0 mx-auto border-b-2 border-dashed border-accent-foreground"
-              style={{
-                paddingTop: "10px",
-                paddingBottom: "10px",
-                marginTop: "-10px",
-                touchAction: "none",
-                cursor: hasPrinted.current ? "grab" : "default",
-              }}
-              onPointerDown={onBarPointerDown}
-              onPointerMove={onBarPointerMove}
-              onPointerUp={onBarPointerUp}
-            />
+              className="flex flex-col tracking-wide md:text-9xl text-5xl text-center p-6
+            md:p-10 pb-0 bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
+            >
+              <div className="flex flex-wrap gap-2 items-center justify-center leading-[85%] font-heading">
+                <h1 className="hero-line">TRISTAN</h1>
+                <h1 className="hero-line">JOHNSTON</h1>
+              </div>
+              <h3 className="hero-sub md:text-3xl text-lg mb-4 tracking-tight md:tracking-wide">
+                Software Engineer · Full-Stack Developer
+                <span
+                  ref={cursorRef}
+                  className="typewriter-cursor"
+                  aria-hidden="true"
+                />
+              </h3>
+            </div>
+
+            {/* -------------------------
+                PRINTER BAR + DRAG HANDLE
+            ------------------------- */}
+
+            <div
+              ref={navRef}
+              style={{ pointerEvents: "auto" }}
+              className="relative z-10 bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
+            >
+              <Nav />
+
+              <div
+                className="printer-line h-[2px] w-0 mx-auto border-b-2 border-dashed border-accent-foreground"
+                style={{
+                  paddingTop: "10px",
+                  paddingBottom: "10px",
+                  marginTop: "-10px",
+                  touchAction: "none",
+                  cursor: hasPrinted.current ? "grab" : "default",
+                }}
+                onPointerDown={onBarPointerDown}
+                onPointerMove={onBarPointerMove}
+                onPointerUp={onBarPointerUp}
+              />
+            </div>
           </div>
 
           {/* -------------------------
@@ -376,11 +395,18 @@ const Main = () => {
                 Inner div starts y:-H and
                 descends to y:0 in lockstep
                 with container height.
+                Height is reserved up
+                front (see useGSAP) so the
+                scrollbar never grows, but
+                the frame border around it
+                stays transparent until
+                the "revealed" class is
+                added when printing starts.
           ------------------------- */}
 
           <div
             ref={pageFeedRef}
-            className="page-feed overflow-hidden bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
+            className="page-feed page-feed-frame overflow-hidden bg-[hsl(38,33%,90%)] dark:bg-[hsl(38,33%,5%)]"
             style={{ height: 0 }}
           >
             {/* All page content lives here — no independent reveal anims */}
