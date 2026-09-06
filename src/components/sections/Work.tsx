@@ -121,19 +121,20 @@ const Work = () => {
                     className="block w-full aspect-video object-cover bg-accent-foreground/5 md:absolute md:inset-0 md:h-full md:aspect-auto"
                   />
 
-                  {/* Eased scrim: video reads at full size on the left,
-                      fading to the page background toward the right so
-                      the overlaid text stays legible. */}
+                  {/* Eased scrim: solid behind the text on the left,
+                      dropping steeply so the whole text column stays
+                      legible, then opening onto the video toward the
+                      right. */}
                   <div
                     className="hidden md:block absolute inset-0 pointer-events-none
-                    bg-[linear-gradient(to_right,transparent_0%,transparent_30%,hsla(38,33%,90%,0.55)_55%,hsla(38,33%,90%,0.92)_75%,hsl(38,33%,90%)_95%)]
-                    dark:bg-[linear-gradient(to_right,transparent_0%,transparent_30%,hsla(38,33%,5%,0.55)_55%,hsla(38,33%,5%,0.92)_75%,hsl(38,33%,5%)_95%)]"
+                    bg-[linear-gradient(to_right,hsl(38,33%,90%)_0%,hsl(38,33%,90%)_42%,hsla(38,33%,90%,0.9)_52%,hsla(38,33%,90%,0.35)_65%,transparent_80%)]
+                    dark:bg-[linear-gradient(to_right,hsl(38,33%,5%)_0%,hsl(38,33%,5%)_42%,hsla(38,33%,5%,0.9)_52%,hsla(38,33%,5%,0.35)_65%,transparent_80%)]"
                   />
 
                   {project.caption && (
                     <span
                       className="relative z-10 mt-2 block w-fit text-xs uppercase tracking-wider text-muted-foreground
-                      md:absolute md:bottom-3 md:left-3 md:mt-0 md:bg-black/60 md:px-2 md:py-1 md:text-white md:backdrop-blur-sm"
+                      md:absolute md:bottom-3 md:right-3 md:mt-0 md:bg-black/60 md:px-2 md:py-1 md:text-white md:backdrop-blur-sm"
                     >
                       {project.caption}
                     </span>
@@ -141,7 +142,7 @@ const Work = () => {
 
                   <div
                     className="relative z-10 mt-4 flex flex-col gap-3
-                    md:absolute md:inset-y-0 md:right-0 md:mt-0 md:w-3/5 md:justify-center md:p-8
+                    md:absolute md:inset-y-0 md:left-0 md:mt-0 md:w-3/5 md:justify-center md:p-8
                     lg:w-1/2 lg:p-10"
                   >
                     <p
