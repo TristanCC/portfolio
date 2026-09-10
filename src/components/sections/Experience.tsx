@@ -1,3 +1,6 @@
+import SectionHeading from "../ui/SectionHeading";
+import MetaStamp from "../ui/MetaStamp";
+
 type Job = {
   role: string;
   company: string;
@@ -34,60 +37,41 @@ const jobs: Job[] = [
 
 const Experience = () => {
   return (
-    <div className="leading-relaxed space-y-8">
-      <div className="flex justify-between border-b-2 border-accent-foreground pb-2">
-        <div className="flex flex-col items-start justify-end px-2 font-bold grow">
-          <span
-            className="text-lg md:text-xl tracking-wider"
-            style={{ fontFamily: "var(--font-syne)" }}
-          >
-            ARTICLE II — EXPERIENCE
-          </span>
-          <h1
-            className="text-3xl md:text-5xl tracking-wide"
-            style={{ fontFamily: "var(--font-syne)" }}
-          >
-            CAREER HISTORY
-          </h1>
-        </div>
-      </div>
+    <div>
+      <SectionHeading index="02" label="EXPERIENCE" title="Career history." />
 
-      <div className="pl-6 md:pl-8 border-l-2 border-accent-foreground/30 space-y-10">
+      <div className="space-y-12">
         {jobs.map((job) => (
-          <div key={job.role} className="relative">
-            <span
-              className="absolute -left-6 md:-left-8 top-2 w-3 h-3 -translate-x-1/2 rounded-full
-              bg-orange-500 ring-4 ring-[hsl(38,33%,90%)] dark:ring-[hsl(38,33%,5%)]"
-            />
-
-            <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1">
-              <h3
-                className="text-lg md:text-xl tracking-wide"
-                style={{ fontFamily: "var(--font-syne)" }}
-              >
-                {job.role}
-              </h3>
-              <span className="text-sm uppercase tracking-wider text-muted-foreground shrink-0">
-                {job.dates}
-              </span>
+          <div
+            key={job.role}
+            className="grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-4 pt-6 border-t hairline"
+          >
+            <div className="md:col-span-3">
+              <MetaStamp
+                lines={[
+                  { label: "D", value: job.dates },
+                  { label: "C", value: `${job.company} · ${job.location}` },
+                ]}
+              />
             </div>
 
-            <p className="text-sm uppercase tracking-wider text-muted-foreground mb-3">
-              {job.company} · {job.location}
-            </p>
+            <div className="md:col-span-9">
+              <h3 className="font-heading font-bold text-2xl md:text-3xl tracking-tight mb-4">
+                {job.role}
+              </h3>
 
-            <ul className="space-y-2">
-              {job.bullets.map((bullet) => (
-                <li
-                  key={bullet}
-                  className="flex gap-2 text-sm md:text-base"
-                  style={{ fontFamily: "var(--font-inter)" }}
-                >
-                  <span className="text-muted-foreground shrink-0">—</span>
-                  <span>{bullet}</span>
-                </li>
-              ))}
-            </ul>
+              <ul className="space-y-2">
+                {job.bullets.map((bullet) => (
+                  <li
+                    key={bullet}
+                    className="flex gap-2 text-base md:text-lg font-body"
+                  >
+                    <span className="text-muted-foreground shrink-0">—</span>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         ))}
       </div>

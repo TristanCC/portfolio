@@ -14,64 +14,65 @@ export default async function Image() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "hsl(38, 33%, 90%)",
-          backgroundImage:
-            "radial-gradient(hsl(38, 33%, 70%) 2px, transparent 2px)",
-          backgroundSize: "36px 36px",
+          padding: "96px",
+          backgroundColor: "#ffffff",
         }}
       >
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
             alignItems: "center",
-            padding: "64px 96px",
-            border: "2px dashed rgba(0,0,0,0.35)",
-            backgroundColor: "hsl(38, 33%, 90%)",
+            gap: 10,
+            fontSize: 22,
+            letterSpacing: 3,
+            textTransform: "uppercase",
+            color: "#666666",
+            marginBottom: 32,
           }}
         >
           <div
             style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              lineHeight: 0.9,
-              letterSpacing: -2,
+              width: 10,
+              height: 10,
+              borderRadius: 999,
+              backgroundColor: "#ff3300",
             }}
-          >
-            <div style={{ fontSize: 130, fontWeight: 800, color: "#1a1a1a" }}>
-              TRISTAN
-            </div>
-            <div style={{ fontSize: 130, fontWeight: 800, color: "#1a1a1a" }}>
-              JOHNSTON
-            </div>
+          />
+          Available for work — Birmingham, AL
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            lineHeight: 0.92,
+            letterSpacing: -3,
+          }}
+        >
+          <div style={{ fontSize: 148, fontWeight: 700, color: "#111111" }}>
+            SOFTWARE
           </div>
-          <div
-            style={{
-              fontSize: 32,
-              marginTop: 28,
-              color: "#1a1a1a",
-            }}
-          >
-            Software Engineer · Full-Stack Developer
+          <div style={{ fontSize: 148, fontWeight: 700, color: "#111111" }}>
+            ENGINEER.
           </div>
-          <div
-            style={{
-              display: "flex",
-              gap: 24,
-              marginTop: 40,
-              fontSize: 22,
-              letterSpacing: 3,
-              textTransform: "uppercase",
-              color: "#f97316",
-            }}
-          >
-            <div>/ About</div>
-            <div>/ Experience</div>
-            <div>/ Work</div>
-          </div>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            gap: 32,
+            marginTop: 48,
+            fontSize: 22,
+            letterSpacing: 2,
+            textTransform: "uppercase",
+            color: "#666666",
+          }}
+        >
+          <div>01 About</div>
+          <div>02 Experience</div>
+          <div>03 Work</div>
+          <div>04 Contact</div>
         </div>
       </div>
     ),

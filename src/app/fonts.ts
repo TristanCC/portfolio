@@ -1,22 +1,22 @@
-import { Syne, Bebas_Neue, Inter } from "next/font/google";
+import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
 
-export const syne = Syne({
+export const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-syne",
+  weight: ["400", "500", "700"],
+  variable: "--font-space-grotesk",
   display: "swap",
 });
 
 export const inter = Inter({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "500", "600"],
   variable: "--font-inter",
   display: "swap",
 });
 
-export const bebasNeue = Bebas_Neue({
+export const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-bebas-neue",
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
   display: "swap",
 });

@@ -137,44 +137,51 @@
 
 @layer utilities {
   .font-heading {
-    font-family: var(--font-bebas-neue);
+    font-family: var(--font-space-grotesk);
   }
 
   .font-body {
-    font-family: var(--font-syne);
-  }
-
-  .font-ui {
     font-family: var(--font-inter);
   }
+
+  .font-mono {
+    font-family: var(--font-plex-mono);
+  }
+}
+
+:root {
+  --accent-red: #ff3300;
+  --hairline: rgb(0 0 0 / 12%);
+}
+
+.dark {
+  --hairline: rgb(255 255 255 / 10%);
 }
 
 .nav-link.active {
-  border-bottom: 2px solid currentColor;
-  border-color: rgb(249 115 22);
+  color: var(--accent-red);
 }
 
-.typewriter-cursor {
+.hairline {
+  border-color: var(--hairline);
+}
+
+.live-dot {
   display: inline-block;
-  width: 0.06em;
-  height: 0.72em;
-  margin-left: 0.05em;
-  background-color: currentColor;
-  vertical-align: -0.05em;
+  width: 0.4em;
+  height: 0.4em;
+  border-radius: 9999px;
+  background-color: var(--accent-red);
+  animation: live-pulse 2s ease-in-out infinite;
 }
 
-.typewriter-cursor.is-blinking {
-  animation: typewriter-blink 1s steps(1) infinite;
-}
-
-@keyframes typewriter-blink {
+@keyframes live-pulse {
   0%,
-  49% {
+  100% {
     opacity: 1;
   }
-  50%,
-  100% {
-    opacity: 0;
+  50% {
+    opacity: 0.35;
   }
 }
 

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import "./globals.css";
 
-import { syne, bebasNeue, inter } from "./fonts";
+import { spaceGrotesk, inter, plexMono } from "./fonts";
 
 const title = "Tristan Johnston — Software Engineer";
 const description =
@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${bebasNeue.variable} ${syne.variable} ${inter.variable} max-w-screen`}
+        className={`${spaceGrotesk.variable} ${inter.variable} ${plexMono.variable} max-w-screen`}
       >
         <div
           id="portal-root"
