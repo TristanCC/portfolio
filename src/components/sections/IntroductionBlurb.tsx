@@ -8,15 +8,17 @@ const IntroductionBlurb = () => {
       <div className="space-y-4 text-base md:text-lg font-body leading-relaxed max-w-2xl">
         <p>
           I&apos;m a full-stack software engineer based in Birmingham, AL,
-          currently building volunteer-coordination tools for a 12,000+
-          member civic tech platform. I like projects that sit at the
-          intersection of data and interface — turning large, messy
-          datasets into something people can actually navigate.
+          currently building volunteer-coordination tools for a 12,000+ member
+          civic tech platform. I like projects that sit at the intersection of
+          data and interface — turning large, messy datasets into something
+          people can actually navigate.
         </p>
         <p>
-          Outside of client work, I spend a lot of time on geospatial and
-          visualization side projects, and I&apos;m always looking for the
-          next excuse to push a dataset through a map.
+          Outside of work, I spend a lot of time exploring the intersections
+          between tech, policy, and economy. Sometimes its more illuminating to
+          interact with data through interactivity and historical context rather
+          than hard numbers, hence my Birmingham map project! I also try to keep
+          up with the newest developments in AI!
         </p>
         <p>
           You can find the full rundown on my{" "}

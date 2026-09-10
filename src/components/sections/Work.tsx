@@ -58,17 +58,19 @@ const Work = () => {
             <div className="lg:col-span-8">
               {project.video && (
                 <div className="mb-4">
-                  <video
-                    playsInline
-                    autoPlay
-                    loop
-                    muted
-                    preload="none"
-                    poster="/parcel-thumbnail.jpg"
-                    aria-label={`${project.title} demonstration`}
-                    src={project.video}
-                    className="w-full aspect-video object-cover border hairline"
-                  />
+                  <div className="video-paper rotate-1">
+                    <video
+                      playsInline
+                      autoPlay
+                      loop
+                      muted
+                      preload="none"
+                      poster="/parcel-thumbnail.jpg"
+                      aria-label={`${project.title} demonstration`}
+                      src={project.video}
+                      className="block w-full aspect-video object-cover border hairline saturate-90 contrast-90"
+                    />
+                  </div>
                   {project.caption && (
                     <span className="block mt-2 font-body text-[13px] text-foreground/70">
                       {project.caption}

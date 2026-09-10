@@ -1,9 +1,13 @@
+import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import Nav from "./Nav";
 import ThemeToggle from "./ThemeToggle";
 import IntroductionBlurb from "./sections/IntroductionBlurb";
 import Experience from "./sections/Experience";
 import Work from "./sections/Work";
 import HeroIllustration from "./HeroIllustration";
+import SectionScale from "./SectionScale";
+
+const skillPills = ["TypeScript", "React", "Next.js", "Python", "PostgreSQL"];
 
 export default function Main() {
   return (
@@ -26,6 +30,7 @@ export default function Main() {
       </header>
 
       <main id="top">
+        <SectionScale />
         <section className="hero-section grid md:grid-cols-[1.4fr_1fr] items-center gap-10 py-14 md:py-24">
           <div>
             <p className="text-muted-foreground mb-5">
@@ -33,7 +38,9 @@ export default function Main() {
             </p>
             <h1 className="hero-title mb-6">
               <span className="hero-greeting">Hi, I&apos;m</span>
-              <span className="hero-name">Tristan<span className="text-[var(--accent-red)]">.</span></span>
+              <span className="hero-name">
+                Tristan<span className="text-[var(--accent-red)]">.</span>
+              </span>
             </h1>
             <p className="max-w-lg text-lg md:text-xl leading-relaxed text-foreground/80">
               I turn messy data and interesting problems into things people can
@@ -55,11 +62,15 @@ export default function Main() {
               Available for work &middot; Birmingham, AL
             </p>
           </div>
-          <div className="hero-playground relative mx-auto w-full max-w-[360px] aspect-square">
+          <div className="hero-playground relative mx-auto w-full max-w-[400px] aspect-square">
             <div aria-hidden="true" className="building-fragment">
-              {Array.from({ length: 12 }, (_, i) => <span key={i} />)}
+              {Array.from({ length: 21 }, (_, i) => (
+                <span key={i} />
+              ))}
             </div>
-            <div className="portrait-paper"><HeroIllustration /></div>
+            <div className="portrait-paper">
+              <HeroIllustration />
+            </div>
             <svg
               aria-hidden="true"
               viewBox="0 0 240 240"
@@ -69,7 +80,7 @@ export default function Main() {
                 d="M79 103 Q89 89 99 103 M143 100 Q153 89 161 102 M121 107 L115 130 L127 133 M89 147 Q117 167 148 140"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="3"
+                strokeWidth="6"
                 strokeLinecap="round"
               />
               <path
@@ -93,10 +104,17 @@ export default function Main() {
           <IntroductionBlurb />
           <aside className="margin-note self-start p-6 md:mt-16">
             <h3 className="font-heading text-xl mb-4">Things I reach for</h3>
-            <p className="leading-relaxed text-foreground/80">
-              TypeScript, React, Next.js, Python, PostgreSQL, and a map whenever
-              the data calls for one.
-            </p>
+            <div className="leading-relaxed text-foreground/80">
+              {skillPills.map((skill, i) => (
+                <p
+                  key={i}
+                  className="border-b-1 border-dashed w-min inline-block  m-1 border-blu"
+                >
+                  {skill},
+                </p>
+              ))}{" "}
+              among other things
+            </div>
             <div className="flex flex-wrap gap-5 mt-6 text-sm">
               <a
                 className="text-link"
@@ -129,12 +147,36 @@ export default function Main() {
               I&apos;m open to new roles, interesting projects, and a good
               conversation.
             </p>
-            <a
-              className="text-link text-base md:text-xl break-all"
-              href="mailto:tristan.c.johnston@gmail.com"
-            >
-              tristan.c.johnston@gmail.com ↗
-            </a>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+              <a
+                className="text-link text-base md:text-xl break-all"
+                href="mailto:tristan.c.johnston@gmail.com"
+              >
+                tristan.c.johnston@gmail.com ↗
+              </a>
+              <div className="flex items-center gap-1">
+                <a
+                  href="https://github.com/TristanCC"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub (opens in a new tab)"
+                  title="GitHub"
+                  className="inline-flex size-11 items-center justify-center text-muted-foreground hover:text-[var(--accent-blue)] motion-safe:transition-colors"
+                >
+                  <FaGithub size={18} aria-hidden="true" />
+                </a>
+                <a
+                  href="https://linkedin.com/in/tristan-johnston-37817a282"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn (opens in a new tab)"
+                  title="LinkedIn"
+                  className="inline-flex size-11 items-center justify-center text-muted-foreground hover:text-[var(--accent-blue)] motion-safe:transition-colors"
+                >
+                  <FaLinkedinIn size={18} aria-hidden="true" />
+                </a>
+              </div>
+            </div>
           </div>
         </section>
       </main>

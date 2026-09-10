@@ -22,7 +22,7 @@ const HeroIllustration = () => {
       width: Math.max(1, wrapper.clientWidth),
       height: Math.max(1, wrapper.clientHeight),
       fontSize: 24,
-      frameRate: 20,
+      frameRate: 60,
       plugins: [SynthPlugin],
     });
 
