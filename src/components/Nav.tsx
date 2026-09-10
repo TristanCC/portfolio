@@ -1,39 +1,14 @@
-const items = [
-  { label: "ABOUT", index: "01" },
-  { label: "EXPERIENCE", index: "02" },
-  { label: "WORK", index: "03" },
-  { label: "CONTACT", index: "04" },
-];
+const items = ["Work", "About", "Experience", "Contact"];
 
-const Nav = () => {
+export default function Nav() {
   return (
-    <nav className="w-full">
-      <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-sm tracking-[0.05em] uppercase">
-        {items.map(({ label, index }) => (
-          <li key={label}>
-            <a
-              href={`#${label.toLowerCase()}`}
-              className="nav-link inline-flex items-baseline gap-1 py-2 text-foreground/65 hover:text-foreground transition-colors duration-200"
-            >
-              <span className="text-xs opacity-70">[{index}]</span>
-              <span>{label}</span>
-            </a>
-          </li>
+    <nav aria-label="Main navigation" className="w-full lg:w-auto lg:ml-auto">
+      <ul className="flex flex-wrap items-center gap-x-5 text-sm">
+        {items.map((label) => (
+          <li key={label}><a href={`#${label.toLowerCase()}`} className="inline-flex items-center min-h-11 text-foreground/75 hover:text-[var(--accent-red)]">{label}</a></li>
         ))}
-        <li>
-          <a
-            href="/TristanCJohnstonResume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-baseline gap-1 py-2 text-foreground/65 hover:text-foreground transition-colors duration-200"
-          >
-            <span className="text-xs opacity-70">[↓]</span>
-            <span>RESUME</span>
-          </a>
-        </li>
+        <li><a href="/TristanCJohnstonResume.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-11 text-foreground/75 hover:text-[var(--accent-red)]">Resume ↗</a></li>
       </ul>
     </nav>
   );
-};
-
-export default Nav;
+}

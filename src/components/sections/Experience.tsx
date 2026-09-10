@@ -38,7 +38,7 @@ const jobs: Job[] = [
 const Experience = () => {
   return (
     <div>
-      <SectionHeading index="02" label="EXPERIENCE" title="Career history." />
+      <SectionHeading title="Where I've been building." />
 
       <div className="space-y-12">
         {jobs.map((job) => (
@@ -49,14 +49,14 @@ const Experience = () => {
             <div className="md:col-span-3">
               <MetaStamp
                 lines={[
-                  { label: "D", value: job.dates },
-                  { label: "C", value: `${job.company} · ${job.location}` },
+                  { label: "When", value: job.dates },
+                  { label: "Company", value: `${job.company} · ${job.location}` },
                 ]}
               />
             </div>
 
             <div className="md:col-span-9">
-              <h3 className="font-heading font-bold text-2xl md:text-3xl tracking-tight mb-4">
+              <h3 className="font-heading font-medium text-2xl md:text-3xl tracking-tight mb-4">
                 {job.role}
               </h3>
 

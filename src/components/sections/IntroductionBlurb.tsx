@@ -3,7 +3,7 @@ import SectionHeading from "../ui/SectionHeading";
 const IntroductionBlurb = () => {
   return (
     <div>
-      <SectionHeading index="01" label="ABOUT" title="Hey, I'm Tristan." />
+      <SectionHeading title="A little about me." />
 
       <div className="space-y-4 text-base md:text-lg font-body leading-relaxed max-w-2xl">
         <p>

@@ -1,18 +1,5 @@
-type SectionHeadingProps = {
-  index: string;
-  label: string;
-  title: string;
-};
+type SectionHeadingProps = { title: string };
 
-const SectionHeading = ({ index, label, title }: SectionHeadingProps) => (
-  <div className="mb-10 md:mb-14">
-    <div className="font-mono text-xs tracking-[0.15em] text-muted-foreground mb-3">
-      [{index}] {label}
-    </div>
-    <h2 className="font-heading font-bold tracking-tight text-4xl md:text-6xl">
-      {title}
-    </h2>
-  </div>
-);
-
-export default SectionHeading;
+export default function SectionHeading({ title }: SectionHeadingProps) {
+  return <h2 className="font-heading font-medium tracking-tight text-3xl md:text-5xl mb-8 md:mb-10">{title}</h2>;
+}

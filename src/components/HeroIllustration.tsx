@@ -21,7 +21,7 @@ const HeroIllustration = () => {
       canvas,
       width: Math.max(1, wrapper.clientWidth),
       height: Math.max(1, wrapper.clientHeight),
-      fontSize: 9,
+      fontSize: 24,
       frameRate: 20,
       plugins: [SynthPlugin],
     });
@@ -45,7 +45,7 @@ const HeroIllustration = () => {
         noise(3, 0.025)
           .seed(2024)
           .charMap("  .:-=+*")
-          .charColor(1, 0.2, 0)
+          .charColor(0.12, 0.22, 0.65)
           .cellColor(0, 0, 0, 0),
       );
       t.resizeCanvas(
@@ -88,11 +88,7 @@ const HeroIllustration = () => {
     <div
       ref={wrapperRef}
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 overflow-hidden opacity-20 md:opacity-35"
-      style={{
-        maskImage:
-          "radial-gradient(ellipse at 90% 65%, black, transparent 70%)",
-      }}
+      className="pointer-events-none absolute inset-0 overflow-hidden opacity-30"
     >
       <canvas ref={canvasRef} className="block h-full w-full" />
     </div>

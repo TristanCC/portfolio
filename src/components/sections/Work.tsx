@@ -1,11 +1,7 @@
-"use client";
-
-import { useEffect, useRef } from "react";
 import SectionHeading from "../ui/SectionHeading";
 import MetaStamp from "../ui/MetaStamp";
 
 type Project = {
-  index: string;
   title: string;
   description: string;
   category: string;
@@ -17,107 +13,64 @@ type Project = {
 
 const projects: Project[] = [
   {
-    index: "01",
     title: "Birmingham Parcel Data Visualization",
     description:
-      "An interactive 3D geospatial visualization of value-per-acre parcel data using Deck.gl and MapLibre, highlighting the interactions between municipal land usage efficiency and the lived experience of Birmingham residents across 50k+ parcels. Municipal parcel data was wrangled and standardized with Python, served from a Dockerized PostGIS database using spatial index queries and dynamic color interpolation.",
+      "Explore land value across 50,000+ Birmingham parcels in an interactive 3D map. Python standardizes municipal data, PostGIS handles spatial queries, and Deck.gl and MapLibre bring the results into the browser.",
     category: "Personal project",
     stack: "Next.js, React, PostGIS, Deck.gl, Docker",
     href: "https://github.com/TristanCC/Jeffco-Value-Per-Acre",
     video: "/parcel.mp4",
-    caption: "FIG. 1 — NAVIGATING THE PARCEL MAP",
+    caption: "A look around the parcel map",
   },
   {
-    index: "02",
     title: "RAG PDF Search",
     description:
-      "A Retrieval-Augmented Generation system enabling natural-language search across hundreds of PDF pages. Sentence-transformer embeddings and pgvector power fast semantic queries, with FastAPI and Express microservices handling document parsing, embedding, and storage, and the OpenAI API generating context-aware answers with referenced citations and page numbers.",
+      "Ask questions across hundreds of PDF pages and get answers with citations and page numbers. Sentence-transformer embeddings and pgvector retrieve relevant passages; FastAPI and Express handle document processing, and the OpenAI API generates answers.",
     category: "Personal project",
     stack: "Next.js, FastAPI, PostgreSQL, pgvector, OpenAI API",
     href: "https://github.com/TristanCC/pdf-rag-search",
   },
 ];
 
-const ProjectVideo = ({
-  src,
-  className,
-}: {
-  src: string;
-  className: string;
-}) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const el = videoRef.current;
-    if (!el) return;
-
-    // Don't fetch or play this until it's actually scrolled into
-    // view -- it's large, and there's no reason to load it for a
-    // visitor who never gets this far down the page.
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.play().catch(() => {});
-        } else {
-          el.pause();
-        }
-      },
-      { threshold: 0.25 },
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <video
-      ref={videoRef}
-      className={className}
-      src={src}
-      muted
-      loop
-      playsInline
-      poster="/parcel-thumbnail.jpg"
-      preload="none"
-    />
-  );
-};
-
 const Work = () => {
   return (
     <div>
-      <SectionHeading index="03" label="WORK" title="Selected projects." />
+      <SectionHeading title="A few things I've made." />
 
       <div className="space-y-16 md:space-y-20">
         {projects.map((project) => (
-          <a
+          <article
             key={project.title}
-            href={project.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-4 pt-8 border-t hairline"
+            className="project-entry grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-6 py-8 md:py-10"
           >
-            <div className="md:col-span-3">
-              <h3 className="font-heading font-bold text-2xl md:text-4xl tracking-tight mb-4 group-hover:text-[var(--accent-red)] transition-colors duration-200">
-                {project.title} ↗
+            <div className="lg:col-span-4">
+              <h3 className="font-heading font-medium text-2xl md:text-3xl tracking-tight mb-4">
+                {project.title}
               </h3>
               <MetaStamp
                 lines={[
-                  { label: "C", value: project.category },
-                  { label: "T", value: project.stack },
+                  { label: "Project", value: project.category },
+                  { label: "Built with", value: project.stack },
                 ]}
               />
             </div>
 
-            <div className="md:col-span-9">
+            <div className="lg:col-span-8">
               {project.video && (
                 <div className="mb-4">
-                  <ProjectVideo
+                  <video
+                    playsInline
+                    autoPlay
+                    loop
+                    muted
+                    preload="none"
+                    poster="/parcel-thumbnail.jpg"
+                    aria-label={`${project.title} demonstration`}
                     src={project.video}
                     className="w-full aspect-video object-cover border hairline"
                   />
                   {project.caption && (
-                    <span className="block mt-2 font-mono text-[13px] uppercase tracking-[0.1em] text-foreground/70">
+                    <span className="block mt-2 font-body text-[13px] text-foreground/70">
                       {project.caption}
                     </span>
                   )}
@@ -126,8 +79,17 @@ const Work = () => {
               <p className="text-base md:text-lg font-body leading-relaxed">
                 {project.description}
               </p>
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center mt-3 font-body text-sm underline underline-offset-4 hover:text-[var(--accent-red)]"
+                aria-label={`View ${project.title} source on GitHub`}
+              >
+                View source on GitHub ↗
+              </a>
             </div>
-          </a>
+          </article>
         ))}
       </div>
     </div>

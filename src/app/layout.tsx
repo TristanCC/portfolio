@@ -37,7 +37,6 @@ export default function RootLayout({
         <div
           id="portal-root"
           className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none [&>*]:pointer-events-auto"
-          aria-hidden
           style={{ zIndex: 9998 }}
         />
         <ThemeProvider

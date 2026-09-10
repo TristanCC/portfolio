@@ -131,6 +131,7 @@
   }
   body {
     @apply bg-background text-foreground overflow-x-hidden;
+    font-family: var(--font-inter), sans-serif;
   }
 }
 
@@ -150,38 +151,90 @@
 }
 
 :root {
-  --accent-red: #ff3300;
-  --hairline: rgb(0 0 0 / 12%);
+  --accent-red: #bb302a;
+  --accent-blue: #2447aa;
+  --background: #f3efe4;
+  --foreground: #272820;
+  --muted-foreground: #65645a;
+  --soft-surface: #e8e2d4;
+  --ink: #233a80;
+  --muted: #e8e2d4;
+  --hairline: #bbb5a7;
 }
-
 .dark {
-  --hairline: rgb(255 255 255 / 10%);
+  --background: #242520;
+  --foreground: #eee9dd;
+  --muted-foreground: #b9b7aa;
+  --accent-red: #fa8172;
+  --accent-blue: #92acf4;
+  --soft-surface: #30312b;
+  --muted: #30312b;
+  --hairline: #57584d;
 }
-
-.nav-link.active {
-  color: var(--accent-red);
-}
-
-.hairline {
-  border-color: var(--hairline);
-}
-
+::selection { background: var(--accent-blue); color: var(--background); }
+.hairline { border-color: var(--hairline); }
 .live-dot {
   display: inline-block;
   width: 0.4em;
   height: 0.4em;
-  border-radius: 9999px;
-  background-color: var(--accent-red);
-  animation: live-pulse 2s ease-in-out infinite;
+  border-radius: 50%;
+  background: var(--accent-red);
 }
-
-@keyframes live-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.35;
-  }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 5px; }
+.site-header { border-bottom: 2px solid var(--foreground); }
+.site-header nav a:hover { text-decoration: underline; text-underline-offset: 5px; }
+.section-space { padding-block: clamp(3rem, 7vw, 5rem); scroll-margin-top: 2rem; }
+.hero-title { font-family: var(--font-space-grotesk), sans-serif; line-height: 0.92; letter-spacing: -0.065em; }
+.hero-greeting { display: block; font-family: Georgia, serif; font-style: italic; font-weight: 400; font-size: clamp(2.4rem, 5vw, 4rem); letter-spacing: -0.05em; margin-bottom: 0.22em; }
+.hero-name { display: block; font-size: clamp(4rem, 10vw, 8rem); font-weight: 700; color: var(--accent-blue); }
+.hero-playground { isolation: isolate; margin-block: 1.5rem; }
+.hero-playground::before {
+  content: "";
+  position: absolute;
+  inset: 7% -2% 12% 15%;
+  background: #b9362e;
+  clip-path: polygon(0 0, 100% 16%, 83% 100%, 0 85%);
+  transform: rotate(-8deg);
+  z-index: -2;
 }
-
+.building-fragment {
+  position: absolute;
+  right: 1%; top: -4%; width: 42%; height: 94%;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  padding: 18px 12px; background: #284995; transform: rotate(5deg); z-index: -1;
+}
+.building-fragment span { background: #dbd7c9; border-bottom: 4px solid #172c60; }
+.building-fragment span:nth-child(4n) { background: #b84a39; }
+.portrait-paper {
+  position: absolute; inset: 10% 18% 7% -1%;
+  background: #e3d8bc;
+  clip-path: polygon(7% 0, 97% 4%, 100% 94%, 89% 100%, 2% 95%, 0 18%);
+  transform: rotate(-7deg);
+}
+.portrait-lines { color: #293c75; transform: translate(-8%, 1%) rotate(-7deg); }
+.portrait-caption {
+  background: var(--background); border-bottom: 2px solid var(--accent-red);
+  font-family: Georgia, serif; font-style: italic; font-size: 1.15rem; transform: rotate(-4deg);
+}
+.primary-link, .secondary-link {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem;
+  min-height: 48px; padding: 0.75rem 1.1rem; font-weight: 500;
+}
+.primary-link { background: var(--accent-blue); color: var(--background); }
+.secondary-link { text-decoration: underline; text-underline-offset: 5px; }
+.primary-link:hover { background: var(--accent-red); }
+.secondary-link:hover, .text-link:hover { color: var(--accent-red); }
+.text-link { text-decoration: underline; text-underline-offset: 5px; }
+.project-entry { position: relative; border-top: 2px solid var(--accent-blue); }
+.project-entry:nth-child(even) { border-color: var(--accent-red); }
+.project-entry h3 { color: var(--accent-blue); }
+.project-entry:nth-child(even) h3 { color: var(--accent-red); }
+.project-entry video { box-shadow: 7px 7px 0 var(--soft-surface); }
+.margin-note { border-left: 3px solid var(--accent-red); background: var(--soft-surface); }
+.margin-note h3 { font-family: Georgia, serif; font-style: italic; }
+.contact-note { border-top: 5px solid var(--accent-red); border-bottom: 1px solid var(--hairline); }
+.contact-note h2 { color: var(--accent-blue); }
+@media (min-width: 1024px) {
+  .project-entry:nth-child(even) { margin-left: 8%; }
+  .margin-note { transform: rotate(1.5deg); }
+}
